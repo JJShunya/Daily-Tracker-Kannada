@@ -158,10 +158,22 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:3p
       <button class="startbtn" id="startBtn">Start today's lesson →</button>
     </div>
 
+    <div id="restoreBanner" class="card" style="display:none;background:#e7f0e2;border-color:var(--leaf-d)">
+      <div style="font-family:'Fraunces';font-weight:900;font-size:17px;color:var(--leaf-d)">Welcome back 👋</div>
+      <p class="sub" style="margin:4px 0 12px">No saved progress found in this browser. If you have a <b>kali-progress.json</b> backup file, restore it to bring back your streak.</p>
+      <button class="startbtn" style="background:var(--leaf-d);color:var(--cream);font-size:15px;padding:12px;box-shadow:3px 3px 0 var(--ink)" id="bannerRestoreBtn">⬆️ Restore my backup</button>
+    </div>
+
     <h2 style="font-size:19px;margin-bottom:2px">Your 150-day path</h2>
     <p class="sub">Tap any unlocked day. Each ≈ 6–10 min. Earlier phrases come back as review.</p>
     <div class="weeks" id="weeks"></div>
     <div id="pathArea"></div>
+    <div style="display:flex;gap:10px;margin-top:22px">
+      <button class="startbtn" style="background:var(--cream);box-shadow:3px 3px 0 var(--ink);font-size:14px;padding:11px" id="backupBtn">⬇️ Save backup</button>
+      <button class="startbtn" style="background:var(--cream);box-shadow:3px 3px 0 var(--ink);font-size:14px;padding:11px" id="restoreBtn">⬆️ Restore backup</button>
+    </div>
+    <p class="tip">Your progress is also saved automatically in this browser. The backup file is a safety net in case your phone clears browser data. Keep the latest <b>kali-progress.json</b> in your Downloads.</p>
+    <input type="file" id="restoreFile" accept="application/json,.json" style="display:none">
     <div class="resetlink" id="resetLink">Reset all progress</div>
   </div>
 
@@ -189,8 +201,10 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:3p
       <div class="reward"><b id="dAcc">0%</b><small>accuracy</small></div>
       <div class="reward"><b id="dStreak">0</b><small>day streak</small></div>
     </div>
-    <button class="cta green" style="max-width:300px;margin:0 auto" onclick="goHome()">Back to path</button>
+    <button class="cta" id="doneBackupBtn" style="max-width:300px;margin:0 auto;background:var(--leaf-d)">⬇️ Save my progress (backup)</button>
+    <button class="cta" style="max-width:300px;margin:10px auto 0;background:var(--ink)" onclick="goHome()">Back to path</button>
     <div class="tip" id="doneTip"></div>
+    <div class="tip" id="doneBackupMsg" style="color:var(--leaf-d);font-weight:700"></div>
   </div>
 
   <!-- PHRASEBOOK -->
@@ -219,12 +233,22 @@ let state={ xp:0, streak:0, completed:{}, lastStudyDate:null };
 let cur={ day:null, queue:[], idx:0, correct:0, isReview:false };
 let activeWeek=1;
 
-async function loadState(){
-  try{ const r=await window.storage.get(KEY); if(r&&r.value) state=JSON.parse(r.value); }
+function loadState(){
+  try{ const v=localStorage.getItem(KEY); if(v) state=JSON.parse(v); }
   catch(e){ /* first run / no key */ }
 }
-async function saveState(){
-  try{ await window.storage.set(KEY, JSON.stringify(state)); }catch(e){ console.warn('save failed',e); }
+function saveState(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch(e){ console.warn('localStorage blocked',e); }
+}
+/* Load progress from a chosen backup file (returns via callback) */
+function loadFromFile(file, cb){
+  const r=new FileReader();
+  r.onload=()=>{ try{ const s=JSON.parse(r.result);
+    if(typeof s.xp==='number'&&s.completed){ cb(s); } else cb(null); }
+    catch(e){ cb(null); } };
+  r.onerror=()=>cb(null);
+  r.readAsText(file);
 }
 
 /* day-string for streak tracking */
@@ -382,7 +406,7 @@ function nextQ(){
   cur.idx++;
   if(cur.idx>=cur.queue.length) finishLesson(); else renderQ();
 }
-async function finishLesson(){
+function finishLesson(){
   const scored=cur.queue.filter(q=>q.t!=='intro').length;
   const acc=Math.round(cur.correct/scored*100);
   const gained=20+cur.correct*2;
@@ -396,7 +420,7 @@ async function finishLesson(){
     else state.streak=1;
     state.lastStudyDate=t;
   }
-  await saveState();
+  saveState();
   updateStats(); show('done');
   document.getElementById('doneUnit').textContent=cur.obj.title+' · '+cur.obj.weekTitle.split('·')[1].trim();
   document.getElementById('dXp').textContent='+'+gained;
@@ -440,25 +464,58 @@ function show(id){ ['home','lesson','done','book'].forEach(x=>document.getElemen
 function setNav(n){ document.getElementById('nav-home').classList.toggle('active',n==='home');
   document.getElementById('nav-book').classList.toggle('active',n==='book'); }
 function goHome(){ activeWeek=Math.max(1,CURRICULUM[Math.min(nextDay(),150)-1].week);
-  show('home'); setNav('home'); renderHero(); renderWeekChips(); renderPath(); }
+  show('home'); setNav('home'); renderHero(); renderWeekChips(); renderPath();
+  if(typeof updateBanner==='function') updateBanner(); }
 function openBook(){ show('book'); setNav('book'); renderBook(); }
 function updateStats(){ document.getElementById('xp').textContent=state.xp;
   document.getElementById('streak').textContent=state.streak; }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
 function esc(s){ return s.replace(/'/g,"\\'"); }
 
-document.getElementById('resetLink').onclick=async()=>{
+/* ============ BACKUP / RESTORE ============ */
+function doBackup(){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(state)],{type:'application/json'}));
+  a.download='kali-progress.json';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1500);
+}
+document.getElementById('backupBtn').onclick=doBackup;
+document.getElementById('doneBackupBtn').onclick=()=>{
+  doBackup();
+  document.getElementById('doneBackupMsg').textContent='✓ Saved to Downloads as kali-progress.json';
+};
+function pickRestore(){ document.getElementById('restoreFile').click(); }
+document.getElementById('restoreBtn').onclick=pickRestore;
+document.getElementById('bannerRestoreBtn').onclick=pickRestore;
+document.getElementById('restoreFile').onchange=(e)=>{
+  const f=e.target.files[0]; if(!f) return;
+  loadFromFile(f,(s)=>{
+    if(s){ state=s; saveState(); updateStats(); goHome();
+      alert('Progress restored! You\'re on Day '+(maxCompleted()+1)+' · streak '+state.streak+' 🔥'); }
+    else alert('That doesn\'t look like a Kali backup file. Pick the kali-progress.json file.');
+  });
+  e.target.value=''; // allow re-picking same file
+};
+
+document.getElementById('resetLink').onclick=()=>{
   if(confirm('Reset ALL progress, streak and XP? This cannot be undone.')){
     state={xp:0,streak:0,completed:{},lastStudyDate:null};
-    await saveState(); updateStats(); goHome();
+    saveState(); updateStats(); goHome();
   }
 };
 
+/* show the restore banner only when this browser has no saved progress yet */
+function updateBanner(){
+  const empty = state.xp===0 && Object.keys(state.completed).length===0;
+  document.getElementById('restoreBanner').style.display = empty ? 'block':'none';
+}
+
 /* ============ BOOT ============ */
-(async function(){
+(function(){
   if('speechSynthesis'in window){ speechSynthesis.onvoiceschanged=primeVoices; primeVoices(); }
-  await loadState();
-  updateStats(); goHome();
+  loadState();
+  updateStats(); goHome(); updateBanner();
 })();
 </script>
 </body>
