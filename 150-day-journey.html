@@ -2,283 +2,461 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1a3a2e">
-<title>150 Day Journey</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kindle — 150 Days of Small Brave Experiments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#10261d; --bg2:#16352a; --card:#1c4034; --card2:#22493b;
-  --leaf:#7cc497; --leaf-d:#4fa377; --gold:#e8c07a; --gold-d:#cfa356;
-  --rose:#e8a0a0; --cream:#f4ecdf; --text:#eef5ef; --muted:#9fc0ad;
-  --line:rgba(124,196,151,.18);
+  --night:#1c1822; --night2:#262030; --ink:#f3ece2; --muff:#b6a994;
+  --ember:#e8743b; --ember-d:#c2511f; --gold:#e8b04b; --rose:#d96b7e;
+  --conn:#6fae9e; --alive:#e8743b; --calm:#8e7cc3;
+  --line:#3a3142; --card:#241f2e; --glow:rgba(232,116,59,.25);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{
-  font-family:'Outfit',sans-serif;color:var(--text);
-  background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(232,192,122,.10), transparent 60%),
-    radial-gradient(900px 500px at -10% 110%, rgba(124,196,151,.12), transparent 55%),
-    linear-gradient(160deg,var(--bg),var(--bg2));
-  min-height:100vh;padding:0 0 40px;-webkit-font-smoothing:antialiased;
-}
-.grain{position:fixed;inset:0;pointer-events:none;opacity:.04;z-index:1;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.wrap{max-width:520px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+body{font-family:'Spline Sans',sans-serif;background:var(--night);color:var(--ink);min-height:100vh;
+  background-image:radial-gradient(circle at 50% -10%, #2c2436 0%, var(--night) 55%);}
+.wrap{max-width:580px;margin:0 auto;padding:18px 16px 100px;position:relative}
 
-header{padding:38px 0 22px;text-align:center}
-.kicker{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
-h1{font-family:'Fraunces',serif;font-weight:600;font-size:40px;line-height:1.02;letter-spacing:-.5px}
-h1 em{font-style:italic;color:var(--leaf)}
-.sub{color:var(--muted);font-size:14px;margin-top:8px;font-weight:300}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.logo{font-family:'Fraunces',serif;font-weight:900;font-size:26px;letter-spacing:-.5px;color:var(--ink);line-height:1}
+.logo b{color:var(--ember)}
+.stats{display:flex;gap:9px}
+.stat{background:var(--night2);border:1px solid var(--line);border-radius:12px;padding:6px 11px;
+  display:flex;align-items:center;gap:5px;font-weight:700;font-size:15px}
+.stat small{font-size:10px;font-weight:500;color:var(--muff);display:block;line-height:1}
 
-.progress-card{background:linear-gradient(145deg,var(--card),var(--card2));
-  border:1px solid var(--line);border-radius:22px;padding:22px 22px 24px;margin:18px 0;
-  box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
-.pc-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px}
-.pc-day{font-family:'Fraunces',serif;font-size:30px;font-weight:600}
-.pc-day span{color:var(--muted);font-size:16px;font-family:'Outfit';font-weight:300}
-.streak{text-align:right}
-.streak .num{font-family:'Fraunces',serif;font-size:26px;color:var(--gold)}
-.streak .lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.bar{height:9px;background:rgba(0,0,0,.25);border-radius:99px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf-d),var(--leaf),var(--gold));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
-.bar-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
+h2{font-family:'Fraunces',serif;font-weight:900;letter-spacing:-.5px;line-height:1.12}
+.sub{font-size:13.5px;color:var(--muff);margin:5px 0 16px;line-height:1.45}
 
-.nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 16px}
-.nav button{background:var(--card);border:1px solid var(--line);color:var(--text);
-  width:46px;height:46px;border-radius:14px;font-size:20px;cursor:pointer;transition:.2s}
-.nav button:active{transform:scale(.92);background:var(--card2)}
-.nav .today-btn{flex:1;height:46px;border-radius:14px;font-family:'Outfit';font-size:13px;
-  letter-spacing:1px;text-transform:uppercase;color:var(--bg);font-weight:600;border:none;
-  background:linear-gradient(90deg,var(--leaf),var(--gold))}
+/* ---- TODAY CARD ---- */
+.today{background:linear-gradient(160deg,var(--night2),var(--card));border:1px solid var(--line);
+  border-radius:24px;padding:24px 22px;margin-bottom:18px;position:relative;overflow:hidden}
+.today::before{content:"";position:absolute;top:-40%;right:-20%;width:60%;height:120%;
+  background:radial-gradient(circle,var(--glow),transparent 70%);pointer-events:none}
+.eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.4px;
+  color:var(--muff);text-transform:uppercase;margin-bottom:12px}
+.strand-dot{width:9px;height:9px;border-radius:50%}
+.today h2{font-size:26px;margin-bottom:10px}
+.today .task{font-size:16px;line-height:1.5;color:var(--ink);opacity:.95}
+.cta{width:100%;background:var(--ember);color:#fff;border:none;border-radius:15px;padding:16px;
+  font-size:16px;font-weight:700;cursor:pointer;margin-top:18px;font-family:'Spline Sans';
+  box-shadow:0 6px 20px -6px var(--ember)}
+.cta:active{transform:translateY(1px)}
+.cta.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);box-shadow:none}
+.cta.calm{background:var(--calm);box-shadow:0 6px 20px -6px var(--calm)}
+.cta.conn{background:var(--conn);box-shadow:0 6px 20px -6px var(--conn)}
+.progressline{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:12px;color:var(--muff)}
+.ptrack{flex:1;height:6px;background:var(--night);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.ptrack i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--ember));border-radius:6px}
 
-.quote{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
-  border-radius:0 16px 16px 0;padding:18px 20px;margin-bottom:14px;position:relative}
-.quote .mark{font-family:'Fraunces',serif;font-size:46px;line-height:0;color:var(--gold-d);
-  position:absolute;top:26px;left:12px;opacity:.4}
-.quote p{font-family:'Fraunces',serif;font-style:italic;font-size:17px;line-height:1.45;padding-left:22px}
+/* ---- phase chips ---- */
+.phases{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+.phases::-webkit-scrollbar{display:none}
+.pchip{flex:0 0 auto;background:var(--night2);border:1px solid var(--line);border-radius:11px;
+  padding:7px 13px;font-weight:600;font-size:12.5px;cursor:pointer;color:var(--muff);white-space:nowrap}
+.pchip.active{background:var(--ink);color:var(--night);border-color:var(--ink)}
 
-.fact{display:flex;gap:12px;background:rgba(124,196,151,.07);border:1px solid var(--line);
-  border-radius:16px;padding:16px 18px;margin-bottom:20px;align-items:flex-start}
-.fact .ic{font-size:18px;flex-shrink:0;margin-top:1px}
-.fact .body .t{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--leaf);font-weight:600;margin-bottom:4px}
-.fact .body p{font-size:14px;line-height:1.5;color:var(--text);font-weight:300}
+.phasehead{font-family:'Fraunces';font-weight:900;font-size:17px;margin:14px 0 2px}
+.phasehead small{display:block;font-family:'Spline Sans';font-weight:400;font-size:12.5px;color:var(--muff);margin-top:3px}
 
-.section-t{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);
-  font-weight:600;margin:24px 4px 12px}
-.habits{display:flex;flex-direction:column;gap:10px}
-.habit{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
-  border-radius:16px;padding:15px 16px;cursor:pointer;transition:.2s;user-select:none}
-.habit:active{transform:scale(.99)}
-.habit.done{background:linear-gradient(145deg,rgba(79,163,119,.22),rgba(124,196,151,.10));border-color:rgba(124,196,151,.4)}
-.check{width:26px;height:26px;border-radius:9px;border:2px solid var(--muted);flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;transition:.2s;font-size:15px;color:transparent}
-.habit.done .check{background:var(--leaf);border-color:var(--leaf);color:var(--bg)}
-.habit .emoji{font-size:20px;flex-shrink:0}
-.habit .txt{flex:1}
-.habit .txt .h{font-size:15px;font-weight:500}
-.habit .txt .d{font-size:12px;color:var(--muted);font-weight:300;margin-top:1px}
-.habit.done .txt .h{text-decoration:line-through;text-decoration-color:var(--leaf-d);opacity:.75}
+/* ---- day grid ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:9px;margin-top:14px}
+.cell{aspect-ratio:1;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;cursor:pointer;background:var(--night2);position:relative;
+  transition:transform .1s,border-color .2s}
+.cell:active{transform:scale(.94)}
+.cell .cn{font-family:'Fraunces';font-weight:600;font-size:17px}
+.cell .cd{width:6px;height:6px;border-radius:50%;margin-top:4px}
+.cell.done{background:var(--card)}
+.cell.done .cn{color:var(--muff)}
+.cell.today{border-color:var(--ember);border-width:2px;box-shadow:0 0 16px -4px var(--ember)}
+.cell.locked{opacity:.35;cursor:not-allowed}
+.cell .seal{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;
+  background:var(--ember);color:#fff;font-size:11px;display:grid;place-items:center;border:2px solid var(--night)}
 
-.day-done{text-align:center;padding:16px;margin-top:16px;border-radius:16px;
-  background:linear-gradient(135deg,rgba(232,192,122,.16),rgba(124,196,151,.12));
-  border:1px solid var(--line);display:none}
-.day-done.show{display:block;animation:pop .4s ease}
-@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.day-done .big{font-family:'Fraunces',serif;font-size:20px;color:var(--gold)}
-.day-done .small{font-size:13px;color:var(--muted);margin-top:4px}
+/* ---- LESSON / EXPERIMENT screen ---- */
+#exp{display:none}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.back{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--night2);
+  color:var(--ink);font-size:18px;cursor:pointer;flex-shrink:0}
+.daylabel{font-family:'Fraunces';font-weight:600;font-size:15px}
+.section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px}
+.section .label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muff);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.exptitle{font-family:'Fraunces';font-weight:900;font-size:24px;margin-bottom:10px;line-height:1.15}
+.exptask{font-size:16.5px;line-height:1.55}
+.why{font-size:14px;line-height:1.55;color:var(--muff);font-style:italic;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 
-.note-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
-.note-card textarea{width:100%;min-height:90px;resize:vertical;background:rgba(0,0,0,.18);
-  border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);
-  font-family:'Outfit';font-size:14px;line-height:1.5;font-weight:300;outline:none}
-.note-card textarea::placeholder{color:var(--muted);opacity:.7}
-.note-card textarea:focus{border-color:var(--leaf-d)}
-.note-foot{height:16px;margin-top:8px;text-align:right}
-.note-foot span{font-size:11px;color:var(--leaf);opacity:0;transition:opacity .3s}
-.note-foot span.show{opacity:.8}
+.quote{font-family:'Fraunces';font-weight:500;font-size:18px;line-height:1.4;font-style:italic}
+.quote-by{font-family:'Spline Sans';font-style:normal;font-size:13px;color:var(--muff);margin-top:8px;font-weight:600}
 
-.food-toggle{width:100%;margin-top:26px;background:var(--card);border:1px solid var(--line);
-  border-radius:16px;padding:16px 18px;color:var(--text);font-family:'Outfit';font-size:14px;
-  font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-.food-toggle .arrow{transition:.3s;color:var(--gold)}
-.food-toggle.open .arrow{transform:rotate(180deg)}
-.food-panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.food-panel.open{max-height:1400px}
-.food-grid{padding:14px 2px 4px;display:flex;flex-direction:column;gap:12px}
-.food-cat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.food-cat .ch{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-size:16px;margin-bottom:8px}
-.food-cat .pill{font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(232,192,122,.18);color:var(--gold);letter-spacing:.5px}
-.food-cat p{font-size:13px;line-height:1.55;color:var(--muted);font-weight:300}
-.food-cat.iron .ch{color:var(--rose)} .food-cat.protein .ch{color:var(--leaf)}
-.food-cat.vitc .ch{color:var(--gold)} .food-cat.b12 .ch{color:#9ec8e8}
-.tip{font-size:12px;color:var(--leaf);background:rgba(124,196,151,.08);border-radius:12px;
-  padding:12px 14px;margin-top:4px;line-height:1.5;border:1px dashed var(--line)}
+.treat-q{font-size:15.5px;line-height:1.5;margin-bottom:12px}
+.reveal{background:var(--night2);border:1px solid var(--line);color:var(--gold);border-radius:11px;
+  padding:10px 15px;font-weight:600;font-size:14px;cursor:pointer;font-family:'Spline Sans'}
+.treat-a{margin-top:12px;font-size:15px;line-height:1.5;color:var(--gold);display:none}
+.treat-a.show{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
 
-.reset{display:block;margin:28px auto 0;background:none;border:none;color:var(--muted);
-  font-size:12px;text-decoration:underline;cursor:pointer;opacity:.6}
-.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:24px;opacity:.7;line-height:1.6}
+.reflect-q{font-size:15px;line-height:1.5;margin-bottom:12px;color:var(--ink)}
+textarea{width:100%;min-height:90px;background:var(--night);border:1px solid var(--line);border-radius:14px;
+  padding:14px;color:var(--ink);font-family:'Spline Sans';font-size:15px;resize:vertical;line-height:1.5}
+textarea:focus{outline:none;border-color:var(--ember)}
+.feeling{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.fbtn{flex:1;min-width:60px;background:var(--night2);border:1px solid var(--line);border-radius:12px;
+  padding:10px 4px;cursor:pointer;text-align:center;font-size:12px;color:var(--muff);font-weight:600}
+.fbtn .fe{font-size:20px;display:block;margin-bottom:3px}
+.fbtn.sel{border-color:var(--ember);background:var(--card);color:var(--ink)}
+
+/* ---- DONE ---- */
+#done{display:none;text-align:center;padding-top:40px}
+.seal-big{font-size:70px;animation:pop .5s}
+@keyframes pop{0%{transform:scale(0) rotate(-20deg)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.rewards{display:flex;gap:12px;justify-content:center;margin:24px 0}
+.rew{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px 18px}
+.rew b{font-family:'Fraunces';font-size:24px;display:block;color:var(--ember)}
+.rew small{font-size:11px;color:var(--muff)}
+
+/* ---- JOURNAL ---- */
+#journal{display:none}
+.jentry{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.jhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.jday{font-family:'Fraunces';font-weight:700;font-size:15px}
+.jfeel{font-size:20px}
+.jtitle{font-size:13px;color:var(--muff);margin-bottom:8px}
+.jtext{font-size:14.5px;line-height:1.5;white-space:pre-wrap}
+.jempty{font-size:13px;color:var(--muff);font-style:italic}
+
+/* ---- restore banner ---- */
+.banner{background:linear-gradient(160deg,#2a2236,var(--card));border:1px solid var(--calm);
+  border-radius:18px;padding:18px;margin-bottom:16px;display:none}
+.banner h3{font-family:'Fraunces';font-weight:900;font-size:16px;color:var(--ink)}
+
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(28,24,34,.95);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 0 12px;z-index:20}
+.navb{background:none;border:none;font-size:11px;font-weight:600;cursor:pointer;color:var(--muff);
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 18px;font-family:'Spline Sans'}
+.navb .ic{font-size:20px}
+.navb.active{color:var(--ember)}
+
+.tip{font-size:11.5px;color:var(--muff);text-align:center;margin-top:8px;line-height:1.5}
+.minirow{display:flex;gap:10px;margin-top:20px}
+.minirow button{flex:1;background:var(--night2);border:1px solid var(--line);color:var(--ink);
+  border-radius:12px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Spline Sans'}
+.resetlink{font-size:11.5px;color:var(--muff);text-align:center;margin-top:16px;text-decoration:underline;cursor:pointer;opacity:.6}
 </style>
 </head>
 <body>
-<div class="grain"></div>
 <div class="wrap">
   <header>
-    <div class="kicker">No Pressure · Just Consistency</div>
-    <h1>150 Day <em>Journey</em></h1>
-    <div class="sub">Six gentle habits. One step at a time.</div>
+    <div class="logo">Kindle<b>.</b></div>
+    <div class="stats">
+      <div class="stat">🔥<span id="streak">0</span><small>streak</small></div>
+      <div class="stat">✦<span id="xp">0</span><small>sparks</small></div>
+    </div>
   </header>
 
-  <div class="progress-card">
-    <div class="pc-top">
-      <div class="pc-day">Day <span id="totalLbl"></span></div>
-      <div class="streak"><div class="num" id="streakNum">0</div><div class="lbl">Day Streak</div></div>
+  <!-- HOME -->
+  <div id="home">
+    <div class="banner" id="banner">
+      <h3>Welcome back 👋</h3>
+      <p class="sub" style="margin:6px 0 12px">No saved journey found in this browser. If you have a <b>kindle-progress.json</b> backup, restore it to bring your days and reflections back.</p>
+      <button class="cta calm" id="bannerRestore" style="margin-top:0">Restore my backup</button>
     </div>
-    <div class="bar"><i id="barFill"></i></div>
-    <div class="bar-meta"><span id="doneCount">0 days complete</span><span id="pct">0%</span></div>
-  </div>
 
-  <div class="nav">
-    <button id="prev">‹</button>
-    <button class="today-btn" id="todayBtn">Today</button>
-    <button id="next">›</button>
-  </div>
+    <div class="today" id="todayCard"></div>
 
-  <div class="quote"><span class="mark">"</span><p id="quoteText"></p></div>
+    <h2 style="font-size:18px;margin-bottom:2px">Your 150 days</h2>
+    <p class="sub">Six phases, each going a little deeper. Tap any unlocked day.</p>
+    <div class="phases" id="phases"></div>
+    <div id="pathArea"></div>
 
-  <div class="fact">
-    <span class="ic">🌿</span>
-    <div class="body"><div class="t">Did you know</div><p id="factText"></p></div>
-  </div>
-
-  <div class="section-t">Today's Non-Negotiables</div>
-  <div class="habits" id="habits"></div>
-
-  <div class="day-done" id="dayDone">
-    <div class="big">All seven done ✨</div>
-    <div class="small">That's a full day. Proud of you.</div>
-  </div>
-
-  <div class="section-t">How Was Your Day?</div>
-  <div class="note-card">
-    <textarea id="noteBox" placeholder="A line about today — how you felt, what went well, what was hard, a small win… no rules."></textarea>
-    <div class="note-foot"><span id="noteSaved"></span></div>
-  </div>
-
-  <button class="food-toggle" id="foodToggle">
-    <span>🍲 Vegetarian Food Options</span><span class="arrow">▾</span>
-  </button>
-  <div class="food-panel" id="foodPanel">
-    <div class="food-grid">
-      <div class="food-cat iron"><div class="ch">🩸 Iron <span class="pill">build blood</span></div>
-        <p>Spinach &amp; greens (palak, methi), rajma, chana, black-eyed peas, dal, tofu, pumpkin seeds, sesame (til), jaggery, dates, raisins, dried apricots, poha.</p></div>
-      <div class="food-cat protein"><div class="ch">💪 Protein <span class="pill">tone &amp; repair</span></div>
-        <p>Paneer, tofu, curd/yogurt, milk, dal (all kinds), chana, rajma, sprouts, soya chunks, peanuts, besan (chilla), nuts, Greek yogurt.</p></div>
-      <div class="food-cat vitc"><div class="ch">🍊 Vitamin C <span class="pill">boosts iron</span></div>
-        <p>Amla, lemon, orange, guava, sweet lime (mosambi), capsicum, tomato, strawberries, kiwi, broccoli.</p></div>
-      <div class="food-cat b12"><div class="ch">🥛 B12 <span class="pill">watch this one</span></div>
-        <p>Dairy (milk, curd, paneer, cheese), eggs if you take them, fortified foods (cereals, plant milks, nutritional yeast). Plant sources are minimal — a maintenance supplement may be worth asking your doctor about.</p></div>
-      <div class="tip">⭐ Winning combo: <b>dal + a squeeze of lemon + a side of curd</b> hits iron, protein, vitamin C &amp; B12 in one meal.</div>
+    <div class="minirow">
+      <button id="backupBtn">⬇️ Save backup</button>
+      <button id="restoreBtn">⬆️ Restore backup</button>
     </div>
+    <p class="tip">Your progress saves automatically in this browser. Keep a <b>kindle-progress.json</b> backup in Downloads as a safety net.</p>
+    <input type="file" id="restoreFile" accept="application/json,.json" style="display:none">
+    <div class="resetlink" id="resetLink">Reset everything</div>
   </div>
 
-  <button class="reset" id="resetBtn">Reset all progress</button>
-  <div class="footer">Listen to your body. Skip a day if you need rest —<br>that's part of the plan too, not a failure.</div>
+  <!-- EXPERIMENT -->
+  <div id="exp">
+    <div class="topbar">
+      <button class="back" onclick="goHome()">←</button>
+      <div class="daylabel" id="expDayLabel"></div>
+    </div>
+
+    <div class="section">
+      <div class="label"><span class="strand-dot" id="expStrandDot"></span><span id="expStrand"></span> · Today's experiment</div>
+      <div class="exptitle" id="expTitle"></div>
+      <div class="exptask" id="expTask"></div>
+      <div class="why" id="expWhy"></div>
+    </div>
+
+    <div class="section">
+      <div class="label">✦ A thought to carry</div>
+      <div class="quote" id="expQuote"></div>
+      <div class="quote-by" id="expQuoteBy"></div>
+    </div>
+
+    <div class="section">
+      <div class="label" id="treatLabel">🧠 Brain treat</div>
+      <div class="treat-q" id="treatQ"></div>
+      <button class="reveal" id="treatReveal">Reveal answer</button>
+      <div class="treat-a" id="treatA"></div>
+    </div>
+
+    <div class="section">
+      <div class="label">✍️ How did it feel?</div>
+      <div class="reflect-q" id="reflectQ"></div>
+      <div class="feeling" id="feelingRow"></div>
+      <textarea id="reflectText" placeholder="Write as much or as little as you like…"></textarea>
+    </div>
+
+    <button class="cta" id="completeBtn">Mark today complete →</button>
+    <p class="tip">Doing the experiment is the point — the writing just helps it land.</p>
+  </div>
+
+  <!-- DONE -->
+  <div id="done">
+    <div class="seal-big">✦</div>
+    <h2 style="font-size:26px" id="doneHead">Day complete</h2>
+    <p class="sub" id="doneSub"></p>
+    <div class="rewards">
+      <div class="rew"><b id="dSpark">+0</b><small>sparks</small></div>
+      <div class="rew"><b id="dStreak">0</b><small>day streak</small></div>
+      <div class="rew"><b id="dDone">0</b><small>of 150 done</small></div>
+    </div>
+    <button class="cta" style="max-width:300px;margin:0 auto" id="doneBackup">⬇️ Save my progress (backup)</button>
+    <button class="cta ghost" style="max-width:300px;margin:10px auto 0" onclick="goHome()">Back to my days</button>
+    <p class="tip" id="doneTip"></p>
+    <p class="tip" id="doneBackupMsg" style="color:var(--conn)"></p>
+  </div>
+
+  <!-- JOURNAL -->
+  <div id="journal">
+    <h2 style="font-size:22px">Your journal</h2>
+    <p class="sub">Every reflection you've written, in one place. Look back any time to see how far you've come.</p>
+    <div id="journalList"></div>
+  </div>
 </div>
 
+<nav>
+  <button class="navb active" id="nav-home" onclick="goHome()"><span class="ic">◎</span>Today</button>
+  <button class="navb" id="nav-journal" onclick="openJournal()"><span class="ic">✶</span>Journal</button>
+</nav>
+
 <script>
-const DATA = [{"day": 1, "quote": "The journey of a thousand miles begins with a single step. — Lao Tzu", "fact": "Drinking water before meals can naturally reduce how much you eat."}, {"day": 2, "quote": "Small daily improvements lead to stunning results. — Robin Sharma", "fact": "Spinach loses some iron when overcooked — light steaming keeps more."}, {"day": 3, "quote": "Take care of your body. It's the only place you have to live. — Jim Rohn", "fact": "Your body absorbs iron better when you eat vitamin C alongside it."}, {"day": 4, "quote": "Discipline is choosing between what you want now and what you want most.", "fact": "Muscle is more metabolically active than fat, so it burns more calories at rest."}, {"day": 5, "quote": "Strength does not come from the body. It comes from the will.", "fact": "Walking after meals helps regulate blood sugar."}, {"day": 6, "quote": "You don't have to be extreme, just consistent.", "fact": "Paneer is one of the most protein-dense vegetarian foods in Indian cuisine."}, {"day": 7, "quote": "Wellness is the natural state of my body. — Louise Hay", "fact": "Tea and coffee can block iron absorption if taken with meals."}, {"day": 8, "quote": "A year from now you'll wish you had started today. — Karen Lamb", "fact": "Yoga can lower cortisol, the stress hormone linked to belly fat."}, {"day": 9, "quote": "The body achieves what the mind believes.", "fact": "Curd contains probiotics that support gut health and digestion."}, {"day": 10, "quote": "Slow progress is still progress.", "fact": "Your bones get stronger when you do weight-bearing exercise."}, {"day": 11, "quote": "Fall in love with taking care of yourself.", "fact": "B12 is stored in the liver and can last months, but vegetarians need to top up."}, {"day": 12, "quote": "Energy and persistence conquer all things. — Benjamin Franklin", "fact": "Jaggery is a traditional iron-rich sweetener used across India."}, {"day": 13, "quote": "Your only limit is you.", "fact": "Sleep deprivation increases hunger hormones the next day."}, {"day": 14, "quote": "Self-care is how you take your power back. — Lalah Delia", "fact": "Lentils provide both protein and fiber, keeping you full longer."}, {"day": 15, "quote": "Little by little, one travels far. — J.R.R. Tolkien", "fact": "Strength training keeps burning calories hours after you finish."}, {"day": 16, "quote": "Today's actions are tomorrow's results.", "fact": "Lemon water in the morning gives a gentle vitamin C boost."}, {"day": 17, "quote": "Health is not about the weight you lose, but the life you gain.", "fact": "Amla has one of the highest vitamin C contents of any fruit."}, {"day": 18, "quote": "Be stronger than your excuses.", "fact": "Drinking enough water keeps your metabolism running efficiently."}, {"day": 19, "quote": "Every step is a step forward.", "fact": "Pumpkin seeds are a surprisingly rich plant source of iron."}, {"day": 20, "quote": "Nourish to flourish.", "fact": "Consistency beats intensity for long-term fitness results."}, {"day": 21, "quote": "The groundwork for all happiness is good health. — Leigh Hunt", "fact": "Sprouting beans increases their vitamin content significantly."}, {"day": 22, "quote": "Consistency is what transforms average into excellence.", "fact": "Your muscles need protein to repair and grow after exercise."}, {"day": 23, "quote": "Rest when you're weary. Refresh and renew yourself.", "fact": "Deep breathing during yoga improves oxygen flow to muscles."}, {"day": 24, "quote": "Progress, not perfection.", "fact": "Soya chunks have more protein per gram than most meats."}, {"day": 25, "quote": "Doing something is better than doing nothing.", "fact": "Standing burns more calories than sitting throughout the day."}, {"day": 26, "quote": "A healthy outside starts from the inside. — Robert Urich", "fact": "Fermented foods like idli are easier to digest than non-fermented versions."}, {"day": 27, "quote": "You are what you do, not what you say you'll do. — Carl Jung", "fact": "Iron deficiency is the world's most common nutritional deficiency."}, {"day": 28, "quote": "Take it one day at a time.", "fact": "Bananas give you quick energy and potassium for muscle function."}, {"day": 29, "quote": "The secret of getting ahead is getting started. — Mark Twain", "fact": "A short walk can boost your mood within minutes."}, {"day": 30, "quote": "Motivation gets you going, habit keeps you going.", "fact": "Chickpeas (chana) offer protein, fiber, and iron in one food."}, {"day": 31, "quote": "Care for your body like it matters, because it does.", "fact": "Cooking in cast iron pans can add a little iron to your food."}, {"day": 32, "quote": "Trust the process.", "fact": "Stretching improves circulation and reduces muscle stiffness."}, {"day": 33, "quote": "Your future self is watching you right now through memories.", "fact": "Sesame seeds (til) are packed with calcium and iron."}, {"day": 34, "quote": "Make yourself a priority.", "fact": "Your metabolism naturally dips with age, but exercise slows that decline."}, {"day": 35, "quote": "Wellness is a connection of paths: knowledge and action.", "fact": "Greek yogurt has nearly double the protein of regular yogurt."}, {"day": 36, "quote": "Don't wish for it, work for it.", "fact": "Dehydration is often mistaken for hunger."}, {"day": 37, "quote": "Each day is a fresh start.", "fact": "Tofu absorbs the flavor of whatever you cook it with."}, {"day": 38, "quote": "The difference between try and triumph is a little 'umph'.", "fact": "Squats work some of the largest muscles in your body."}, {"day": 39, "quote": "Healthy is an outfit that looks different on everybody.", "fact": "Dates are a natural source of iron and quick energy."}, {"day": 40, "quote": "You can't pour from an empty cup. Take care of yourself first.", "fact": "Holding a plank strengthens your entire core, not just abs."}, {"day": 41, "quote": "What you do today can improve all your tomorrows. — Ralph Marston", "fact": "Vitamin C helps your body convert plant iron into a usable form."}, {"day": 42, "quote": "Believe you can and you're halfway there. — Theodore Roosevelt", "fact": "Quality sleep is when most muscle repair happens."}, {"day": 43, "quote": "The only bad workout is the one that didn't happen.", "fact": "Peanuts are technically legumes and high in plant protein."}, {"day": 44, "quote": "Strive for progress, not perfection.", "fact": "Walking 10,000 steps isn't magic — even 7,000 brings big benefits."}, {"day": 45, "quote": "Good things come to those who sweat.", "fact": "Methi (fenugreek) leaves are rich in iron and aid digestion."}, {"day": 46, "quote": "Calm mind brings inner strength and self-confidence. — Dalai Lama", "fact": "Muscle weighs more than fat by volume, so the scale can mislead you."}, {"day": 47, "quote": "Take the stairs, your heart will thank you.", "fact": "Bell peppers have more vitamin C than oranges."}, {"day": 48, "quote": "A little progress each day adds up to big results.", "fact": "Hydration improves both physical performance and concentration."}, {"day": 49, "quote": "Your body hears everything your mind says.", "fact": "Rajma (kidney beans) is an excellent vegetarian iron source."}, {"day": 50, "quote": "Eat well, move daily, hydrate often, sleep lots, love your body.", "fact": "A consistent sleep schedule improves sleep quality more than total hours."}, {"day": 51, "quote": "Don't count the days, make the days count. — Muhammad Ali", "fact": "Your body can't store protein, so eating it throughout the day helps."}, {"day": 52, "quote": "Push yourself because no one else is going to do it for you.", "fact": "Broccoli offers vitamin C, fiber, and a bit of plant protein."}, {"day": 53, "quote": "Self-discipline is self-caring.", "fact": "Movement snacks — short bursts of activity — add up over a day."}, {"day": 54, "quote": "The hardest lift of all is lifting your butt off the couch.", "fact": "Raisins are a portable, iron-rich snack."}, {"day": 55, "quote": "You did not wake up today to be mediocre.", "fact": "Yoga improves balance, which protects you from injury as you age."}, {"day": 56, "quote": "Wellness encompasses a healthy body, sound mind, and a tranquil spirit.", "fact": "Milk provides both protein and B12 for vegetarians."}, {"day": 57, "quote": "Sweat is just fat crying.", "fact": "Chewing food slowly helps you feel full and aids digestion."}, {"day": 58, "quote": "Be patient with yourself. Self-growth is tender.", "fact": "Poha (flattened rice) is often fortified with iron."}, {"day": 59, "quote": "Once you learn to quit, it becomes a habit. — Vince Lombardi", "fact": "Lunges work your legs and improve hip mobility at once."}, {"day": 60, "quote": "Take rest; a field that has rested gives a bountiful crop. — Ovid", "fact": "Guava has more vitamin C than most citrus fruits."}, {"day": 61, "quote": "Either you run the day or the day runs you. — Jim Rohn", "fact": "Your resting metabolism accounts for most of the calories you burn daily."}, {"day": 62, "quote": "It's going to be a journey. It's not a sprint to get in shape.", "fact": "Almonds provide protein, healthy fats, and vitamin E."}, {"day": 63, "quote": "The groundwork of all happiness is health.", "fact": "A brisk 30-minute walk can burn around 150 calories."}, {"day": 64, "quote": "You're one workout away from a good mood.", "fact": "Dried apricots are a tasty source of iron and fiber."}, {"day": 65, "quote": "Successful people do what unsuccessful people are not willing to do.", "fact": "Stretching after a workout can reduce next-day soreness."}, {"day": 66, "quote": "Don't stop when you're tired. Stop when you're done.", "fact": "Cheese is a concentrated source of protein and B12."}, {"day": 67, "quote": "To enjoy the glow of good health, you must exercise. — Gene Tunney", "fact": "Drinking water can temporarily increase your metabolic rate."}, {"day": 68, "quote": "Wake up with determination, go to bed with satisfaction.", "fact": "Black-eyed peas are loaded with iron and folate."}, {"day": 69, "quote": "A goal without a plan is just a wish. — Antoine de Saint-Exupéry", "fact": "Building muscle helps your body use insulin more effectively."}, {"day": 70, "quote": "Strength grows in the moments you think you can't go on but keep going.", "fact": "Oranges give you vitamin C plus hydration."}, {"day": 71, "quote": "It does not matter how slowly you go as long as you do not stop. — Confucius", "fact": "Besan (gram flour) is a high-protein base for many Indian dishes."}, {"day": 72, "quote": "The pain you feel today will be the strength you feel tomorrow.", "fact": "Consistent movement is better for your heart than occasional intense bursts."}, {"day": 73, "quote": "Movement is a medicine for creating change in body, mind, and spirit.", "fact": "Sweet lime (mosambi) is a refreshing vitamin C source."}, {"day": 74, "quote": "You only fail when you stop trying.", "fact": "Overhead presses with dumbbells build shoulder strength safely at home."}, {"day": 75, "quote": "Eat to fuel your body, not to feed emotions.", "fact": "Fortified plant milks can be a B12 source for vegetarians."}, {"day": 76, "quote": "Health is a relationship between you and your body.", "fact": "Walking outdoors adds the mood benefits of sunlight and nature."}, {"day": 77, "quote": "Be the energy you want to attract.", "fact": "Kiwi is one of the most vitamin-C-dense fruits per bite."}, {"day": 78, "quote": "One day or day one. You decide.", "fact": "Glute bridges activate muscles weakened by lots of sitting."}, {"day": 79, "quote": "The clock is ticking. Are you becoming who you want to be?", "fact": "Nutritional yeast adds a cheesy flavor and B12 to dishes."}, {"day": 80, "quote": "Make peace with being a work in progress.", "fact": "Fiber-rich foods keep you full and support steady energy."}, {"day": 81, "quote": "A river cuts through rock not because of its power but persistence.", "fact": "Strawberries are low in sugar and high in vitamin C."}, {"day": 82, "quote": "Look after your body, it's the engine that drives you.", "fact": "Bicep curls with light dumbbells build arm tone gradually."}, {"day": 83, "quote": "What seems impossible today will one day become your warm-up.", "fact": "Eggs (if you eat them) are a complete protein and B12 source."}, {"day": 84, "quote": "Excuses don't burn calories.", "fact": "Mindful eating reduces overeating without any diet rules."}, {"day": 85, "quote": "Self-love is the foundation of all health.", "fact": "Tomatoes add vitamin C and antioxidants to everyday meals."}, {"day": 86, "quote": "Tough times never last, but tough people do. — Robert H. Schuller", "fact": "Wall push-ups are a beginner-friendly way to build upper body strength."}, {"day": 87, "quote": "Today I will do what others won't, so tomorrow I can do what others can't.", "fact": "Dairy is the most reliable vegetarian B12 source in Indian diets."}, {"day": 88, "quote": "Your health is an investment, not an expense.", "fact": "Spacing protein across meals supports muscle better than one big serving."}, {"day": 89, "quote": "When you feel like quitting, think about why you started.", "fact": "Cabbage is low-calorie and surprisingly high in vitamin C."}, {"day": 90, "quote": "Gratitude turns what we have into enough.", "fact": "Dead bugs are a gentle core exercise that protects your back."}, {"day": 91, "quote": "The mind is everything. What you think you become. — Buddha", "fact": "A consistent bedtime helps regulate hunger and energy hormones."}, {"day": 92, "quote": "Do something today your future self will thank you for.", "fact": "Moong dal is light, protein-rich, and easy to digest."}, {"day": 93, "quote": "Energy flows where attention goes.", "fact": "Capsicum keeps more vitamin C when eaten raw or lightly cooked."}, {"day": 94, "quote": "You are stronger than you think.", "fact": "Marching in place is a simple home cardio option."}, {"day": 95, "quote": "The greatest wealth is health. — Virgil", "fact": "Curd with a meal aids digestion and adds protein."}, {"day": 96, "quote": "Rome wasn't built in a day, and neither is a healthy you.", "fact": "Pineapple offers vitamin C plus digestive enzymes."}, {"day": 97, "quote": "Choose to be optimistic. It feels better. — Dalai Lama", "fact": "Calf raises strengthen lower legs and improve circulation."}, {"day": 98, "quote": "Don't limit your challenges, challenge your limits.", "fact": "Fortified cereals can help vegetarians meet B12 needs."}, {"day": 99, "quote": "Be proud of every step you take.", "fact": "Even light activity reduces the health risks of prolonged sitting."}, {"day": 100, "quote": "Persistence guarantees that results are inevitable. — Paramahansa Yogananda", "fact": "Papaya is rich in vitamin C and gentle on the stomach."}, {"day": 101, "quote": "The first wealth is health. — Ralph Waldo Emerson", "fact": "Slow, controlled reps build more strength than fast sloppy ones."}, {"day": 102, "quote": "You can have results or excuses. Not both.", "fact": "Cottage cheese is a slow-digesting protein, great before bed."}, {"day": 103, "quote": "Make today so awesome that yesterday gets jealous.", "fact": "Lemon squeezed over dal boosts its iron absorption."}, {"day": 104, "quote": "Discipline is the bridge between goals and accomplishment. — Jim Rohn", "fact": "Skipping rope is one of the most efficient home cardio workouts."}, {"day": 105, "quote": "Take care of your body, it's the only one you'll get.", "fact": "Mushrooms exposed to sunlight can develop small amounts of vitamin D."}, {"day": 106, "quote": "Begin anywhere. — John Cage", "fact": "Rest days are when your body actually gets stronger."}, {"day": 107, "quote": "Be a warrior, not a worrier.", "fact": "Mosambi juice is a hydrating vitamin C drink."}, {"day": 108, "quote": "Stars can't shine without darkness.", "fact": "Stronger leg muscles make everyday activities feel easier."}, {"day": 109, "quote": "The way to get started is to quit talking and begin doing. — Walt Disney", "fact": "Hung curd (Greek-style) packs more protein into less volume."}, {"day": 110, "quote": "Strong is the new beautiful.", "fact": "A glass of water first thing helps rehydrate after sleep."}, {"day": 111, "quote": "Every accomplishment starts with the decision to try.", "fact": "Sattu is a traditional high-protein flour from roasted gram."}, {"day": 112, "quote": "A healthy mind lives in a healthy body.", "fact": "Gentle yoga can ease lower back pain over time."}, {"day": 113, "quote": "Comparison is the thief of joy. — Theodore Roosevelt", "fact": "Oranges and lentils together make an iron-absorption power pair."}, {"day": 114, "quote": "Your speed doesn't matter, forward is forward.", "fact": "Taking the stairs is a free, effective form of exercise."}, {"day": 115, "quote": "Eat for the body you want, not the body you have.", "fact": "Tofu provides calcium, iron, and protein in one ingredient."}, {"day": 116, "quote": "Some people want it to happen, others make it happen.", "fact": "Laughing genuinely engages your core muscles."}, {"day": 117, "quote": "The body is a temple. Keep it pure and clean.", "fact": "Lauki (bottle gourd) is hydrating and easy to digest."}, {"day": 118, "quote": "Habits are the compound interest of self-improvement. — James Clear", "fact": "Progressive overload — slowly increasing effort — drives strength gains."}, {"day": 119, "quote": "Wellness is the complete integration of body, mind, and spirit.", "fact": "Dark leafy greens deliver iron, calcium, and fiber together."}, {"day": 120, "quote": "Do it now. Sometimes 'later' becomes 'never'.", "fact": "A 10-minute walk can clear your mind as well as a longer break."}, {"day": 121, "quote": "You are your best investment.", "fact": "Roasted chana is a crunchy, protein-rich snack."}, {"day": 122, "quote": "Sore today, strong tomorrow.", "fact": "Hydrating well can reduce headaches and fatigue."}, {"day": 123, "quote": "The food you eat can be the safest medicine or the slowest poison. — Ann Wigmore", "fact": "Spinach in smoothies blends in without changing the taste much."}, {"day": 124, "quote": "A calm mind is the ultimate strength.", "fact": "Bodyweight squats need no equipment and build real strength."}, {"day": 125, "quote": "Direction is more important than speed.", "fact": "Yogurt-based drinks like chaas cool the body and aid digestion."}, {"day": 126, "quote": "Health is the crown on the well person's head.", "fact": "Consistency in small habits predicts long-term health better than big efforts."}, {"day": 127, "quote": "Never give up on a dream just because of the time it takes. — Earl Nightingale", "fact": "Beetroot supports blood health and adds natural sweetness."}, {"day": 128, "quote": "Be stronger than your strongest excuse.", "fact": "Carrying groceries counts as functional strength training."}, {"day": 129, "quote": "Take time to make your soul happy.", "fact": "Paneer bhurji is a quick high-protein vegetarian meal."}, {"day": 130, "quote": "The expert in anything was once a beginner.", "fact": "Citrus fruits help your body absorb iron from the same meal."}, {"day": 131, "quote": "Honor your body, it's where you live.", "fact": "Standing desks can reduce daily sitting time meaningfully."}, {"day": 132, "quote": "Done is better than perfect.", "fact": "Edamame (young soybeans) are a complete plant protein."}, {"day": 133, "quote": "Sweat now, shine later.", "fact": "Morning sunlight helps set a healthy sleep-wake rhythm."}, {"day": 134, "quote": "You're allowed to be both a masterpiece and a work in progress.", "fact": "Toor dal is a staple protein source across Indian households."}, {"day": 135, "quote": "Discipline equals freedom. — Jocko Willink", "fact": "Stretching before bed can improve sleep quality."}, {"day": 136, "quote": "Nothing will work unless you do. — Maya Angelou", "fact": "Amla juice is a concentrated daily vitamin C boost."}, {"day": 137, "quote": "Make your body the sexiest outfit you own.", "fact": "Resistance training improves bone density at any age."}, {"day": 138, "quote": "Inhale courage, exhale fear.", "fact": "Sprouted moong is richer in nutrients than the dry version."}, {"day": 139, "quote": "It always seems impossible until it's done. — Nelson Mandela", "fact": "A short daily walk lowers the risk of many chronic diseases."}, {"day": 140, "quote": "Today is your opportunity to build the tomorrow you want.", "fact": "Hummus pairs chickpea protein with healthy fats."}, {"day": 141, "quote": "Push harder than yesterday if you want a different tomorrow.", "fact": "Pairing iron foods with citrus is one of the easiest nutrition wins."}, {"day": 142, "quote": "Strength doesn't come from what you can do, but overcoming what you couldn't.", "fact": "Yoga's focus on breath can lower resting heart rate over time."}, {"day": 143, "quote": "Glow from the inside out.", "fact": "Mixed dal combines different proteins for a fuller amino profile."}, {"day": 144, "quote": "Your only competition is who you were yesterday.", "fact": "Drinking water throughout the day beats chugging it all at once."}, {"day": 145, "quote": "Great things never came from comfort zones.", "fact": "Ragi (finger millet) is rich in calcium and iron."}, {"day": 146, "quote": "The harder you work for something, the greater you'll feel achieving it.", "fact": "Small consistent wins build the confidence to keep going."}, {"day": 147, "quote": "Wellness is a journey, not a destination.", "fact": "Sabudana provides quick energy and is easy to digest."}, {"day": 148, "quote": "Finish what you started.", "fact": "Celebrating progress keeps motivation alive for the long haul."}, {"day": 149, "quote": "You've come too far to take orders from a cookie.", "fact": "Khichdi is a balanced one-pot meal of protein, carbs, and fiber."}, {"day": 150, "quote": "Bloom where you are planted.", "fact": "Your sense of taste sharpens when you cut back on processed foods."}];
-const HABITS = [
-  {e:"🚶‍♀️",h:"Walk 20–30 min",d:"Anytime — even split into two"},
-  {e:"🍛",h:"Protein every meal",d:"Dal, paneer, curd, tofu, sprouts"},
-  {e:"🧘‍♀️",h:"10 min movement",d:"Yoga flow or a quick dumbbell set"},
-  {e:"💧",h:"~2.5 L water",d:"Skip tea/coffee right after meals"},
-  {e:"🪵",h:"1 min Plank",d:"Hold steady — your favourite core builder"},
-  {e:"😴",h:"Sleep 7–8 hrs",d:"Same time each night"},
-  {e:"🩸",h:"Take iron",d:"With lemon/citrus, not milk or tea"}
-];
-const KEY="journey150_v1";
-let state = load();
-let view = state.currentDay || 1;
+const DAYS = [{"day":1,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Do one thing badly","task":"Pick something you avoid because you're not good at it — draw, sing, write a verse — and do it for 10 minutes with zero aim to be good.","why":"Perfectionism quietly feeds emptiness. Permission to be bad reopens play.","reflect":"What did it feel like to not aim for 'good'?","quote":{"q":"The wound is the place where the Light enters you.","by":"Rumi"},"treat":{"type":"teaser","q":"What has to be broken before you can use it?","a":"An egg."}},{"day":2,"kind":"C","kindLabel":"Connection","phase":1,"title":"Send the message you've been sitting on","task":"Text or call one person you've meant to reach. Keep it simple: 'Thought of you today.'","why":"Connection rarely needs a big reason. The reaching is the point.","reflect":"Who did you reach, and what had stopped you?","quote":{"q":"What you seek is seeking you.","by":"Rumi"},"treat":{"type":"fact","q":"Honey never spoils — archaeologists found 3,000-year-old honey in Egyptian tombs still edible.","a":"Its low moisture and acidity keep bacteria out."}},{"day":3,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Sit with 5 minutes of nothing","task":"No phone, no music. Sit and let your mind wander for 5 minutes.","why":"Emptiness shouted at goes quiet when you stop running from it.","reflect":"What showed up in the silence?","quote":{"q":"You must be the change you wish to see in the world.","by":"Gandhi"},"treat":{"type":"puzzle","q":"I'm an odd number. Take away one letter and I become even. What am I?","a":"Seven (remove the 's' → 'even')."}},{"day":4,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Take a different route","task":"Move through part of your day by a path you've never taken. Notice three new things.","why":"Novelty wakes a brain gone on autopilot.","reflect":"What did you notice that you'd usually miss?","quote":{"q":"The cave you fear to enter holds the treasure you seek.","by":"Joseph Campbell"},"treat":{"type":"teaser","q":"What gets wetter the more it dries?","a":"A towel."}},{"day":5,"kind":"C","kindLabel":"Connection","phase":1,"title":"Give one real compliment","task":"Tell someone something genuine you admire — not their looks, something they do or are.","why":"Being seen is rare. Giving it builds the muscle to receive it.","reflect":"How did they react — and how did it feel to say?","quote":{"q":"We are what we repeatedly do.","by":"Aristotle"},"treat":{"type":"fact","q":"Octopuses have three hearts and blue blood.","a":"Two hearts pump to the gills; one to the body."}},{"day":6,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Write down what's heavy","task":"For 10 minutes write whatever weighs on you. No editing. Then close the book.","why":"Naming the weight shrinks it. You set it down outside yourself.","reflect":"Did anything surprise you on the page?","quote":{"q":"Tell me, what is it you plan to do with your one wild and precious life?","by":"Mary Oliver"},"treat":{"type":"puzzle","q":"A farmer has 17 sheep, all but 9 run away. How many are left?","a":"9."}},{"day":7,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Say yes to something small","task":"Say yes to one thing you'd normally decline — an invite, a detour, a new food.","why":"Aliveness lives just past the reflex 'no'.","reflect":"What did your yes open up?","quote":{"q":"The privilege of a lifetime is to become who you truly are.","by":"Carl Jung"},"treat":{"type":"teaser","q":"What has many keys but can't open a single lock?","a":"A piano."}},{"day":8,"kind":"C","kindLabel":"Connection","phase":1,"title":"Ask someone a real question","task":"Ask one person 'How are you, really?' and just listen — no fixing, no rushing.","why":"Real listening is a gift almost nobody gets.","reflect":"What did you learn that you didn't know?","quote":{"q":"Whatever you can do or dream you can, begin it.","by":"Goethe"},"treat":{"type":"fact","q":"Bananas are berries, but strawberries aren't.","a":"Botanically, berries come from one flower with one ovary."}},{"day":9,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Make something with your hands","task":"Cook a new dish, build, fix, plant — anything physical, start to finish.","why":"Making something real counters the hollow of consuming all day.","reflect":"What did you make, and how did finishing feel?","quote":{"q":"In the middle of difficulty lies opportunity.","by":"Albert Einstein"},"treat":{"type":"puzzle","q":"What is 3/7 of a chicken, 2/3 of a cat, and 1/2 of a goat?","a":"CH-AT-G... actually: 'CHICAGO' (CHI + CA + GO)."}},{"day":10,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Three specific gratitudes","task":"Write three specific things — not 'family' but 'the smell of chai this morning.'","why":"Specific gratitude rewires attention toward what's already here.","reflect":"Which one actually moved you?","quote":{"q":"It is never too late to be what you might have been.","by":"George Eliot"},"treat":{"type":"teaser","q":"The more you take, the more you leave behind. What am I?","a":"Footsteps."}},{"day":11,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Do the thing you keep postponing","task":"Pick one task avoided for weeks. Do it today, imperfectly.","why":"Avoided things drain energy quietly. Finishing one frees a lot.","reflect":"Dread vs. reality — how big was the gap?","quote":{"q":"Vulnerability is the birthplace of connection.","by":"Brené Brown"},"treat":{"type":"fact","q":"A day on Venus is longer than its year.","a":"It rotates slower than it orbits the Sun."}},{"day":12,"kind":"C","kindLabel":"Connection","phase":1,"title":"Eat with someone, no phones","task":"Share a meal, both phones away the whole time. Be fully there.","why":"Presence is where connection happens — not proximity.","reflect":"What was different about being fully present?","quote":{"q":"The only way out is through.","by":"Robert Frost"},"treat":{"type":"puzzle","q":"Two fathers and two sons go fishing, each catches one fish, yet only 3 fish are caught. How?","a":"They are grandfather, father, and son — three people."}},{"day":13,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Move with attention","task":"20 minutes of movement — walk, stretch, dance — staying with sensation, not thought.","why":"The body is a doorway out of a spinning head into now.","reflect":"Could you keep coming back to your body?","quote":{"q":"Between stimulus and response there is a space.","by":"Viktor Frankl"},"treat":{"type":"teaser","q":"What can travel around the world while staying in a corner?","a":"A stamp."}},{"day":14,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Make something and share it","task":"Write, shoot, record, build something — and show one person.","why":"Sharing what you make is a small 'I exist.'","reflect":"What did you share, and how did exposure feel?","quote":{"q":"He who has a why to live can bear almost any how.","by":"Nietzsche"},"treat":{"type":"fact","q":"Wombat poop is cube-shaped.","a":"Their intestines mould it into cubes so it won't roll away."}},{"day":15,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Single-task for an hour","task":"Do one thing for a full hour with no switching, no second screen.","why":"Fractured attention fractures the self. Wholeness starts here.","reflect":"What was hard about not switching?","quote":{"q":"Do not go where the path may lead, go where there is no path.","by":"Emerson"},"treat":{"type":"puzzle","q":"If you have me, you want to share me. If you share me, you haven't got me. What am I?","a":"A secret."}},{"day":16,"kind":"C","kindLabel":"Connection","phase":1,"title":"Thank someone who won't expect it","task":"Thank a person whose work usually goes unnoticed — be specific.","why":"Gratitude given freely circles back as warmth.","reflect":"Who, and what did their face do?","quote":{"q":"The unexamined life is not worth living.","by":"Socrates"},"treat":{"type":"teaser","q":"What goes up but never comes down?","a":"Your age."}},{"day":17,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Wander with no destination","task":"Go out for 20 minutes with no goal. Follow curiosity, not a map.","why":"Aimlessness on purpose is where surprise lives.","reflect":"Where did curiosity take you?","quote":{"q":"Courage is not the absence of fear, but the triumph over it.","by":"Nelson Mandela"},"treat":{"type":"fact","q":"There are more possible chess games than atoms in the observable universe.","a":"The 'Shannon number' is about 10^120."}},{"day":18,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Name what you're avoiding","task":"Write the one thing you keep dodging. Just name it honestly — no fix needed yet.","why":"What's named loses its grip in the dark.","reflect":"What did naming it feel like?","quote":{"q":"Happiness is not something ready made. It comes from your own actions.","by":"Dalai Lama"},"treat":{"type":"puzzle","q":"A man looks at a painting and says: 'Brothers and sisters I have none, but this man's father is my father's son.' Who is in the painting?","a":"His son."}},{"day":19,"kind":"C","kindLabel":"Connection","phase":1,"title":"Listen to someone's story","task":"Ask an older person or a friend to tell you a story from their life. Listen fully.","why":"Everyone holds a world. Asking opens it.","reflect":"What surprised you in their story?","quote":{"q":"And the day came when the risk to remain tight in a bud was more painful than the risk to blossom.","by":"Anaïs Nin"},"treat":{"type":"teaser","q":"What has a head and a tail but no body?","a":"A coin."}},{"day":20,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Try a new flavour","task":"Eat or drink something you've never tried. Pay full attention to it.","why":"Small new sensations remind you the world isn't exhausted.","reflect":"What did it taste like, really?","quote":{"q":"Not all those who wander are lost.","by":"J.R.R. Tolkien"},"treat":{"type":"fact","q":"Sharks existed before trees did.","a":"Sharks ~450M years ago; trees ~390M years ago."}},{"day":21,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Ten slow breaths","task":"Three times today, stop and take ten slow breaths. That's all.","why":"Tiny pauses interrupt the autopilot that numbs days.","reflect":"Did anything shift after the breaths?","quote":{"q":"The best way out is always through.","by":"Robert Frost"},"treat":{"type":"puzzle","q":"What 5-letter word becomes shorter when you add two letters to it?","a":"'Short' → 'shorter'."}},{"day":22,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Use your non-dominant hand","task":"Eat, write, or brush teeth with your other hand today.","why":"Disrupting the automatic wakes the mind right up.","reflect":"What did clumsiness teach you?","quote":{"q":"Turn your wounds into wisdom.","by":"Oprah Winfrey"},"treat":{"type":"teaser","q":"What can you catch but not throw?","a":"A cold."}},{"day":23,"kind":"C","kindLabel":"Connection","phase":1,"title":"Check on someone quietly","task":"Message someone just to ask how they're doing — expect nothing back.","why":"Care given without scorekeeping is the realest kind.","reflect":"Who came to mind first, and why?","quote":{"q":"Start where you are. Use what you have. Do what you can.","by":"Arthur Ashe"},"treat":{"type":"fact","q":"The Eiffel Tower can grow over 15 cm taller in summer.","a":"Iron expands in heat."}},{"day":24,"kind":"K","kindLabel":"Inner calm","phase":1,"title":"Sit outside for 10 minutes","task":"Just sit outdoors, no phone. Watch the sky, the street, whatever's there.","why":"The world is always offering itself. You only have to look up.","reflect":"What did you notice out there?","quote":{"q":"What we achieve inwardly will change outer reality.","by":"Plutarch"},"treat":{"type":"puzzle","q":"I have cities but no houses, mountains but no trees, water but no fish. What am I?","a":"A map."}},{"day":25,"kind":"A","kindLabel":"Aliveness","phase":1,"title":"Finish phase 1 with a small risk","task":"Do one slightly bold thing you'd have skipped on day 1.","why":"You've built rhythm. Now feel the edge move.","reflect":"What did you dare, and was the fear right?","quote":{"q":"Be a lamp to yourself.","by":"The Buddha"},"treat":{"type":"teaser","q":"What has hands but cannot clap?","a":"A clock."}},{"day":26,"kind":"C","kindLabel":"Connection","phase":2,"title":"Tell someone what they mean to you","task":"Tell one person directly why they matter — specific and honest.","why":"Unspoken appreciation is a loss for both of you.","reflect":"How did honesty feel — and how did they take it?","quote":{"q":"The journey of a thousand miles begins with one step.","by":"Lao Tzu"},"treat":{"type":"fact","q":"A group of flamingos is called a 'flamboyance'.","a":"Many animal groups have wonderfully odd names."}},{"day":27,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Do something slightly scary","task":"Pick one thing that flips your stomach and do it — speak up, go alone, try the bold thing.","why":"Courage is a muscle. Growth lives where the fear is.","reflect":"Was the fear bigger than the reality?","quote":{"q":"Knowing yourself is the beginning of all wisdom.","by":"Aristotle"},"treat":{"type":"puzzle","q":"What number do you get when you multiply all the numbers on a telephone's keypad?","a":"Zero (one of the keys is 0)."}},{"day":28,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"One hour fully offline","task":"One hour, zero screens. Be with yourself and what's around you.","why":"Constant input drowns your own signal. Silence returns it.","reflect":"What came up when the noise stopped?","quote":{"q":"Act as if what you do makes a difference. It does.","by":"William James"},"treat":{"type":"teaser","q":"What belongs to you but others use it more than you do?","a":"Your name."}},{"day":29,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Talk to a stranger","task":"Start a small, genuine chat with someone you don't know.","why":"Every stranger proves the world is bigger than your head.","reflect":"What happened vs. what you expected?","quote":{"q":"Fall seven times, stand up eight.","by":"Japanese proverb"},"treat":{"type":"fact","q":"Humans share about 60% of their DNA with bananas.","a":"Basic cellular machinery is ancient and shared."}},{"day":30,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Forgive yourself for one thing","task":"Pick one guilt you carry. Write yourself what you'd tell a friend who did it.","why":"Self-compassion isn't soft — it frees you to move.","reflect":"Could you actually mean the forgiveness?","quote":{"q":"Your task is not to seek for love, but to find the barriers within yourself you have built against it.","by":"Rumi"},"treat":{"type":"puzzle","q":"Forward I am heavy, backward I am not. What am I?","a":"The word 'ton'."}},{"day":31,"kind":"C","kindLabel":"Connection","phase":2,"title":"Revive a drifted friendship","task":"Reach out to someone you've lost touch with but still think about.","why":"Drifted bonds often need just one brave message.","reflect":"Why did you let it drift?","quote":{"q":"The two most important days in your life are the day you are born and the day you find out why.","by":"Mark Twain"},"treat":{"type":"teaser","q":"What can fill a room but takes up no space?","a":"Light."}},{"day":32,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Spend an hour on a buried dream","task":"One hour toward something you shelved long ago. Research, start, anything.","why":"Emptiness is sometimes a buried longing asking to be heard.","reflect":"What did it stir?","quote":{"q":"To live is the rarest thing in the world. Most people exist, that is all.","by":"Oscar Wilde"},"treat":{"type":"fact","q":"Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid.","a":"The Pyramid is that ancient."}},{"day":33,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Write a letter you won't send","task":"Write to someone — alive or gone — everything unsaid. Don't send it.","why":"Some things need to be said, not received, to be released.","reflect":"What did you finally get to say?","quote":{"q":"Out of your vulnerabilities will come your strength.","by":"Sigmund Freud"},"treat":{"type":"puzzle","q":"A clock chimes 6 times in 5 seconds. How long to chime 12 times?","a":"11 seconds (gaps, not chimes, count)."}},{"day":34,"kind":"C","kindLabel":"Connection","phase":2,"title":"Ask for help with something","task":"Ask one person for genuine help — small is fine. Let yourself receive.","why":"Needing others isn't weakness; it's the texture of being human.","reflect":"What was hard about asking?","quote":{"q":"We must be willing to let go of the life we planned, to have the life that is waiting for us.","by":"Joseph Campbell"},"treat":{"type":"teaser","q":"What word is spelled wrong in every dictionary?","a":"'Wrong'."}},{"day":35,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Dance to one full song","task":"Alone or not, move your whole body to one song, all the way through.","why":"Joy doesn't need a reason. The body remembers how.","reflect":"What did letting go feel like?","quote":{"q":"Nothing is softer or more flexible than water, yet nothing can resist it.","by":"Lao Tzu"},"treat":{"type":"fact","q":"Sea otters hold hands while sleeping so they don't drift apart.","a":"They also use kelp as an anchor."}},{"day":36,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Notice your inner voice","task":"For one day, catch how you talk to yourself. Just notice the tone.","why":"You can't soften a voice you haven't heard.","reflect":"Was it kinder or harsher than you thought?","quote":{"q":"The most courageous act is still to think for yourself. Aloud.","by":"Coco Chanel"},"treat":{"type":"puzzle","q":"If two's company and three's a crowd, what are four and five?","a":"Nine."}},{"day":37,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Cook for someone","task":"Make food for another person, start to finish, and watch them eat it.","why":"Feeding people is one of the oldest forms of love.","reflect":"How did their enjoyment land in you?","quote":{"q":"Owning our story and loving ourselves through that process is the bravest thing we'll ever do.","by":"Brené Brown"},"treat":{"type":"teaser","q":"What gets bigger the more you take away from it?","a":"A hole."}},{"day":38,"kind":"C","kindLabel":"Connection","phase":2,"title":"Say the awkward true thing","task":"In a conversation, say the honest thing you'd usually swallow — kindly.","why":"Honesty withheld becomes distance. Spoken, it becomes closeness.","reflect":"What did you say, and what happened?","quote":{"q":"Do what you can, with what you have, where you are.","by":"Theodore Roosevelt"},"treat":{"type":"fact","q":"The shortest war in history lasted 38 minutes.","a":"Anglo-Zanzibar War, 1896."}},{"day":39,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Declutter one small space","task":"Clear one drawer, shelf, or corner fully. Notice how the space feels after.","why":"Outer order quiets inner noise more than we admit.","reflect":"How did the cleared space feel?","quote":{"q":"Twenty years from now you will be more disappointed by the things you didn't do.","by":"Mark Twain"},"treat":{"type":"puzzle","q":"A girl has as many brothers as sisters, but each brother has half as many brothers as sisters. How many of each?","a":"4 sisters and 3 brothers."}},{"day":40,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Learn one new skill-seed","task":"Spend 30 minutes learning the very first step of something new.","why":"Beginnings are humbling and alive. Stay a beginner on purpose.","reflect":"What did being a beginner feel like?","quote":{"q":"The mind is everything. What you think you become.","by":"The Buddha"},"treat":{"type":"teaser","q":"What runs but never walks, has a bed but never sleeps?","a":"A river."}},{"day":41,"kind":"C","kindLabel":"Connection","phase":2,"title":"Forgive someone, even silently","task":"Pick one grudge. You don't have to tell them — just set it down inside.","why":"Resentment is a weight you carry for someone who isn't holding it.","reflect":"What got lighter?","quote":{"q":"There is no path to happiness; happiness is the path.","by":"The Buddha"},"treat":{"type":"fact","q":"Your stomach gets a new lining every few days so it doesn't digest itself.","a":"Stomach acid is strong enough to harm tissue."}},{"day":42,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Watch a sunrise or sunset","task":"Actually watch one, start to finish, doing nothing else.","why":"Some beauty asks only that you stop and witness it.","reflect":"What did stillness in front of it feel like?","quote":{"q":"You have power over your mind, not outside events. Realize this, and you will find strength.","by":"Marcus Aurelius"},"treat":{"type":"puzzle","q":"What comes once in a minute, twice in a moment, but never in a thousand years?","a":"The letter 'M'."}},{"day":43,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Do something playful & silly","task":"Be deliberately silly today — a game, a joke, something childlike.","why":"Play is the antidote to the heaviness of taking yourself seriously.","reflect":"When did you last feel this loose?","quote":{"q":"Waste no more time arguing what a good person should be. Be one.","by":"Marcus Aurelius"},"treat":{"type":"teaser","q":"What has an eye but cannot see?","a":"A needle (or a storm)."}},{"day":44,"kind":"C","kindLabel":"Connection","phase":2,"title":"Tell a hard truth gently","task":"Share something real you've been hiding from someone close.","why":"Being fully known is the cure for feeling alone in a crowd.","reflect":"What shifted between you?","quote":{"q":"Very little is needed to make a happy life; it is all within yourself.","by":"Marcus Aurelius"},"treat":{"type":"fact","q":"Scotland's national animal is the unicorn.","a":"Chosen for its mythic purity and pride."}},{"day":45,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Sit with one hard feeling","task":"When a difficult emotion comes, sit with it 5 minutes. Let it move through.","why":"Feelings avoided stay stuck. Felt fully, they pass.","reflect":"What happened when you stayed?","quote":{"q":"The impediment to action advances action. What stands in the way becomes the way.","by":"Marcus Aurelius"},"treat":{"type":"puzzle","q":"I am taken from a mine and shut in a wooden case, yet used by almost everyone. What am I?","a":"Pencil lead (graphite)."}},{"day":46,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Go somewhere new, alone","task":"Take yourself to a new place solo and enjoy your own company.","why":"Enjoying your own company is ground emptiness can't take.","reflect":"What was being alone there like?","quote":{"q":"If you are pained by external things, it is not they that disturb you, but your judgment of them.","by":"Marcus Aurelius"},"treat":{"type":"teaser","q":"What is full of holes but still holds water?","a":"A sponge."}},{"day":47,"kind":"C","kindLabel":"Connection","phase":2,"title":"Reach out to someone lonely","task":"Think of someone who might be lonely. Brighten their day on purpose.","why":"Lifting another is one of the fastest ways out of your own fog.","reflect":"How did it feel to be the warmth?","quote":{"q":"First say to yourself what you would be; and then do what you have to do.","by":"Epictetus"},"treat":{"type":"fact","q":"A bolt of lightning is about five times hotter than the surface of the Sun.","a":"~30,000 K vs ~5,500 K."}},{"day":48,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Write your 'why' — first draft","task":"A few lines: what do you want your days to be about? Direction, not goals.","why":"Purpose is chosen and re-chosen. Naming it points you.","reflect":"Did anything surprise you in writing it?","quote":{"q":"No one saves us but ourselves. We ourselves must walk the path.","by":"The Buddha"},"treat":{"type":"puzzle","q":"Mr. Smith has 4 daughters, each has a brother. How many children does he have?","a":"5 — the daughters share one brother."}},{"day":49,"kind":"A","kindLabel":"Aliveness","phase":2,"title":"Try the boldest thing yet","task":"Do a bigger version of an experiment that once scared you.","why":"The edge has moved. Go find where it is now.","reflect":"Would day-1 you have done this?","quote":{"q":"It does not matter how slowly you go as long as you do not stop.","by":"Confucius"},"treat":{"type":"teaser","q":"What kind of band never plays music?","a":"A rubber band."}},{"day":50,"kind":"K","kindLabel":"Inner calm","phase":2,"title":"Look back over 50 days","task":"Re-read your reflections so far. Notice what's shifting in you.","why":"Growth is invisible day to day, obvious across time.","reflect":"What's different in you now?","quote":{"q":"Our greatest glory is not in never falling, but in rising every time we fall.","by":"Confucius"},"treat":{"type":"fact","q":"Polar bear skin is actually black; their fur is see-through, not white.","a":"It scatters light to appear white."}},{"day":51,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Spend an hour in nature","task":"An hour outdoors among trees, water, or sky. Phone away.","why":"Nature reminds you you're part of something, not apart from it.","reflect":"What did belonging there feel like?","quote":{"q":"Wherever you go, there you are.","by":"Jon Kabat-Zinn"},"treat":{"type":"puzzle","q":"What can you hold in your right hand but never in your left?","a":"Your left hand / elbow."}},{"day":52,"kind":"C","kindLabel":"Connection","phase":3,"title":"Have a no-small-talk conversation","task":"With someone willing, skip the surface. Ask a question that matters.","why":"Depth is available faster than we think — if someone goes first.","reflect":"What did going deep open?","quote":{"q":"The curious paradox is that when I accept myself just as I am, then I can change.","by":"Carl Rogers"},"treat":{"type":"teaser","q":"I'm tall when young and short when old. What am I?","a":"A candle."}},{"day":53,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Create something just for you","task":"Make something nobody else will see. For the joy of making alone.","why":"Not everything must be shared to be worth doing.","reflect":"How did making-for-no-one feel?","quote":{"q":"What lies behind us and what lies before us are tiny matters compared to what lies within us.","by":"Emerson"},"treat":{"type":"fact","q":"An octopus can taste with its arms.","a":"Suckers have chemical receptors."}},{"day":54,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Map your energy","task":"For one day note what fills you and what drains you. Just observe.","why":"You can't redesign a life you haven't watched honestly.","reflect":"What surprised you about the pattern?","quote":{"q":"Life shrinks or expands in proportion to one's courage.","by":"Anaïs Nin"},"treat":{"type":"puzzle","q":"Divide 30 by half and add 10. What do you get?","a":"70 (30 ÷ 0.5 = 60, + 10)."}},{"day":55,"kind":"C","kindLabel":"Connection","phase":3,"title":"Apologise for something real","task":"Make one genuine apology you've been avoiding. No 'but'.","why":"A clean apology frees both people from a held knot.","reflect":"What did letting go of pride feel like?","quote":{"q":"We don't see things as they are, we see them as we are.","by":"Anaïs Nin"},"treat":{"type":"teaser","q":"What has a neck but no head?","a":"A bottle."}},{"day":56,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Move your body hard","task":"Push yourself physically today — a hard walk, run, climb, workout.","why":"Effort burns off the fog like nothing else.","reflect":"What did your body tell you afterward?","quote":{"q":"The privilege of a lifetime is being who you are.","by":"Joseph Campbell"},"treat":{"type":"fact","q":"The dot over a lowercase i or j is called a 'tittle'.","a":"A tiny but named thing."}},{"day":57,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Define enough","task":"Write what 'enough' looks like for you — money, work, success.","why":"Emptiness often comes from chasing a 'more' with no finish line.","reflect":"Where are you already past 'enough'?","quote":{"q":"Tension is who you think you should be. Relaxation is who you are.","by":"Chinese proverb"},"treat":{"type":"puzzle","q":"A rooster lays an egg on the peak of a roof. Which way does it roll?","a":"Roosters don't lay eggs."}},{"day":58,"kind":"C","kindLabel":"Connection","phase":3,"title":"Mentor or teach someone","task":"Share something you know with someone who'd benefit. Even 15 minutes.","why":"Being useful to another is a direct line to meaning.","reflect":"What did being needed feel like?","quote":{"q":"To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.","by":"Emerson"},"treat":{"type":"teaser","q":"What has words but never speaks?","a":"A book."}},{"day":59,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Break one small rule","task":"Do one harmless thing you usually wouldn't 'allow' yourself.","why":"Some emptiness is a self made too small. Stretch it.","reflect":"What rule, and why did you hold it?","quote":{"q":"The only journey is the one within.","by":"Rainer Maria Rilke"},"treat":{"type":"fact","q":"Some turtles can breathe through their rear ends.","a":"Called cloacal respiration."}},{"day":60,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Practice saying no","task":"Say no to one thing you don't want to do, without over-explaining.","why":"Every honest no is a yes to your own life.","reflect":"How did the no sit with you?","quote":{"q":"Be patient toward all that is unsolved in your heart.","by":"Rainer Maria Rilke"},"treat":{"type":"puzzle","q":"If there are 3 apples and you take away 2, how many do you have?","a":"2 — the ones you took."}},{"day":61,"kind":"C","kindLabel":"Connection","phase":3,"title":"Be fully present with one person","task":"Give someone your complete attention for one conversation. No half-listening.","why":"Attention is the most concentrated form of love.","reflect":"What did they get that they usually don't?","quote":{"q":"Perhaps all the dragons in our lives are princesses waiting to see us act, just once, with beauty and courage.","by":"Rilke"},"treat":{"type":"teaser","q":"What invention lets you look right through a wall?","a":"A window."}},{"day":62,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Revisit a childhood joy","task":"Do something you loved as a kid and abandoned.","why":"Old joys hold clues to who you are under the noise.","reflect":"What did it bring back?","quote":{"q":"Let everything happen to you: beauty and terror. Just keep going. No feeling is final.","by":"Rilke"},"treat":{"type":"fact","q":"Venus is the only planet that spins clockwise.","a":"Likely from an ancient massive collision."}},{"day":63,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Sit with the emptiness itself","task":"Instead of fixing it, sit with the empty feeling for 10 minutes. Just be with it.","why":"What you stop fighting often stops fighting you.","reflect":"What did the emptiness feel like up close?","quote":{"q":"The world breaks everyone, and afterward many are strong at the broken places.","by":"Ernest Hemingway"},"treat":{"type":"puzzle","q":"What 7-letter word has hundreds of letters in it?","a":"Mailbox."}},{"day":64,"kind":"C","kindLabel":"Connection","phase":3,"title":"Tell your story to someone","task":"Share a real chapter of your life with someone who'll listen.","why":"Being witnessed turns private pain into shared humanity.","reflect":"What did telling it change?","quote":{"q":"There is no greater agony than bearing an untold story inside you.","by":"Maya Angelou"},"treat":{"type":"teaser","q":"Where does today come before yesterday?","a":"In the dictionary."}},{"day":65,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Say yes to a bigger thing","task":"Accept an invitation or opportunity you'd usually dodge.","why":"The bigger yeses are where your life actually widens.","reflect":"What did you say yes to?","quote":{"q":"You may encounter many defeats, but you must not be defeated.","by":"Maya Angelou"},"treat":{"type":"fact","q":"A 'jiffy' is an actual unit of time: about 1/100th of a second.","a":"Sometimes defined even shorter in physics."}},{"day":66,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Write to your future self","task":"Write a letter to you, one year from now. Honest about now, hopeful for then.","why":"Naming where you want to go quietly starts moving you there.","reflect":"What did you want future-you to know?","quote":{"q":"Try to be a rainbow in someone's cloud.","by":"Maya Angelou"},"treat":{"type":"puzzle","q":"I have branches but no fruit, trunk, or leaves. What am I?","a":"A bank."}},{"day":67,"kind":"C","kindLabel":"Connection","phase":3,"title":"Repair something with someone","task":"Take one step to mend a strained relationship that still matters.","why":"Most distance is bridgeable by whoever moves first.","reflect":"What step did you take?","quote":{"q":"We delight in the beauty of the butterfly, but rarely admit the changes it has gone through.","by":"Maya Angelou"},"treat":{"type":"teaser","q":"What can you keep after giving to someone?","a":"Your word."}},{"day":68,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Do a mini-adventure","task":"Plan and do a small adventure today — somewhere or something out of routine.","why":"Adventure shrinks the world's flatness back to wonder.","reflect":"What was the highlight?","quote":{"q":"I can be changed by what happens to me. But I refuse to be reduced by it.","by":"Maya Angelou"},"treat":{"type":"fact","q":"Cows have best friends and get stressed when separated.","a":"They form strong social bonds."}},{"day":69,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Unplug from comparison","task":"For one day, don't open the feeds where you compare yourself to others.","why":"Comparison is a thief that leaves emptiness as its fee.","reflect":"What was the day like without it?","quote":{"q":"Caring for myself is not self-indulgence, it is self-preservation.","by":"Audre Lorde"},"treat":{"type":"puzzle","q":"How can you drop a raw egg onto a concrete floor without cracking it?","a":"Concrete floors are very hard to crack."}},{"day":70,"kind":"C","kindLabel":"Connection","phase":3,"title":"Give without being asked","task":"See a need today and meet it before anyone asks.","why":"Generosity unprompted is where character actually lives.","reflect":"What did you notice and do?","quote":{"q":"When I dare to be powerful, to use my strength in the service of my vision, then it becomes less important whether I am afraid.","by":"Audre Lorde"},"treat":{"type":"teaser","q":"What has 13 hearts but no other organs?","a":"A deck of cards."}},{"day":71,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Express something you hold in","task":"Write, draw, sing, or speak a feeling you usually keep inside.","why":"What's expressed stops festering. Let it out somewhere.","reflect":"What came out, and how did it feel?","quote":{"q":"The most common way people give up their power is by thinking they don't have any.","by":"Alice Walker"},"treat":{"type":"fact","q":"The Hawaiian alphabet has only 13 letters.","a":"Five vowels and eight consonants."}},{"day":72,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Question one 'should'","task":"Pick one 'I should…' you carry. Ask honestly: whose voice is that?","why":"Half our weight is shoulds we never chose.","reflect":"Whose voice was it — and do you keep it?","quote":{"q":"Look closely at the present you are constructing. It should look like the future you are dreaming.","by":"Alice Walker"},"treat":{"type":"puzzle","q":"What goes through towns and hills but never moves?","a":"A road."}},{"day":73,"kind":"C","kindLabel":"Connection","phase":3,"title":"Deepen one relationship on purpose","task":"Pick one person and take a concrete step to know them better.","why":"Depth beats breadth. A few real bonds hold a life up.","reflect":"Who, and what did you do?","quote":{"q":"Hope is the thing with feathers that perches in the soul.","by":"Emily Dickinson"},"treat":{"type":"teaser","q":"What has a thumb and four fingers but is not alive?","a":"A glove."}},{"day":74,"kind":"A","kindLabel":"Aliveness","phase":3,"title":"Do the scariest small thing","task":"Name the thing fear keeps you from, and take the first real step.","why":"On the other side of fear is usually the growth you wanted.","reflect":"What step did you take?","quote":{"q":"Not knowing when the dawn will come, I open every door.","by":"Emily Dickinson"},"treat":{"type":"fact","q":"Hot water can freeze faster than cold under some conditions.","a":"Called the Mpemba effect."}},{"day":75,"kind":"K","kindLabel":"Inner calm","phase":3,"title":"Half-way reflection","task":"You're 75 days in. Write what's changed and what you want for the next 75.","why":"Midpoints are for re-aiming, not just measuring.","reflect":"What do you want the rest to be about?","quote":{"q":"Tell all the truth but tell it slant.","by":"Emily Dickinson"},"treat":{"type":"puzzle","q":"A word I know, six letters it contains, remove one letter and twelve remains. What is it?","a":"Dozens."}},{"day":76,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Start the thing you keep dreaming about","task":"Take the real first step on the big thing you keep imagining.","why":"Dreams stay heavy until you make them small and start.","reflect":"What first step did you take?","quote":{"q":"And now that you don't have to be perfect, you can be good.","by":"John Steinbeck"},"treat":{"type":"teaser","q":"What kind of room has no doors or windows?","a":"A mushroom."}},{"day":77,"kind":"C","kindLabel":"Connection","phase":4,"title":"Have the conversation you're avoiding","task":"Have the honest talk you've been postponing with someone.","why":"The avoided conversation is usually the one that frees you.","reflect":"What happened when you had it?","quote":{"q":"It is the time you have wasted for your rose that makes your rose so important.","by":"Antoine de Saint-Exupéry"},"treat":{"type":"fact","q":"Butterflies taste with their feet.","a":"Receptors on their legs detect the right plants."}},{"day":78,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Spend a day at half speed","task":"Move through one day deliberately slowly and attentively.","why":"Speed hides life. Slowness hands it back.","reflect":"What did slowness reveal?","quote":{"q":"What is essential is invisible to the eye.","by":"Antoine de Saint-Exupéry"},"treat":{"type":"puzzle","q":"If you were running a race and passed the person in 2nd place, what place would you be in?","a":"2nd place."}},{"day":79,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Put your work into the world","task":"Share something you've made publicly — post, submit, show it.","why":"Visibility is vulnerability. It's also how things grow.","reflect":"What did putting it out feel like?","quote":{"q":"Love does not consist of gazing at each other, but in looking outward together in the same direction.","by":"Saint-Exupéry"},"treat":{"type":"teaser","q":"What gets sharper the more you use it?","a":"Your brain."}},{"day":80,"kind":"C","kindLabel":"Connection","phase":4,"title":"Reconnect across distance","task":"Have a long call with someone far away you miss.","why":"Distance only wins if we let it. Close it on purpose.","reflect":"What did the conversation bring back?","quote":{"q":"A goal is not always meant to be reached, it often serves simply as something to aim at.","by":"Bruce Lee"},"treat":{"type":"fact","q":"The longest hiccuping spell lasted 68 years.","a":"Charles Osborne, from 1922 to 1990."}},{"day":81,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Write what you're proud of","task":"List things you've done that you're genuinely proud of. Sit with them.","why":"We catalogue our failures and forget our wins. Rebalance.","reflect":"Which one did you almost forget?","quote":{"q":"Be water, my friend.","by":"Bruce Lee"},"treat":{"type":"puzzle","q":"What can run but never walks, has a mouth but never talks?","a":"A river."}},{"day":82,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Take a solo trip, even small","task":"Go somewhere — a town, a trail, a part of the city — alone for a few hours.","why":"Solitude in motion is where you meet yourself.","reflect":"What did you learn out there alone?","quote":{"q":"If you spend too much time thinking about a thing, you'll never get it done.","by":"Bruce Lee"},"treat":{"type":"teaser","q":"The person who makes it sells it; the person who buys it never uses it. What is it?","a":"A coffin."}},{"day":83,"kind":"C","kindLabel":"Connection","phase":4,"title":"Ask for honest feedback","task":"Ask someone you trust how you actually come across. Listen without defending.","why":"The mirror others hold shows what we can't see alone.","reflect":"What did you hear, and how did you take it?","quote":{"q":"Knowing is not enough, we must apply. Willing is not enough, we must do.","by":"Bruce Lee"},"treat":{"type":"fact","q":"A snail can sleep for up to three years.","a":"To survive harsh dry periods."}},{"day":84,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Identify your core values","task":"Write the 3–5 values you most want to live by. Honest, not aspirational.","why":"A life aimed by values rarely feels empty for long.","reflect":"Which value are you living least right now?","quote":{"q":"The successful warrior is the average person, with laser-like focus.","by":"Bruce Lee"},"treat":{"type":"puzzle","q":"What five-letter word, when you remove the first letter, sounds the same?","a":"Wrong (→ 'rong'), or 'queue'."}},{"day":85,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Do something out of character","task":"Deliberately act unlike your usual self today, in a good way.","why":"Identity loosens when you prove you're more than your habits.","reflect":"What did stepping out of character show?","quote":{"q":"Do not pray for an easy life, pray for the strength to endure a difficult one.","by":"Bruce Lee"},"treat":{"type":"teaser","q":"What has many teeth but cannot bite?","a":"A comb."}},{"day":86,"kind":"C","kindLabel":"Connection","phase":4,"title":"Show up for someone","task":"Be physically there for someone who needs support today.","why":"Presence in hard moments is the friendship that's remembered.","reflect":"What did showing up ask of you?","quote":{"q":"What you do today can improve all your tomorrows.","by":"Ralph Marston"},"treat":{"type":"fact","q":"The fingerprints of a koala are nearly indistinguishable from human ones.","a":"Even under a microscope."}},{"day":87,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Sit with a big question","task":"Spend 20 minutes with one big question about your life. No need to answer.","why":"Living the question is more honest than forcing an answer.","reflect":"What question did you choose?","quote":{"q":"The only impossible journey is the one you never begin.","by":"Tony Robbins"},"treat":{"type":"puzzle","q":"Two coins add up to 30 cents and one is not a nickel. What are they?","a":"A quarter and a nickel — the *other* one is a nickel."}},{"day":88,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Push a physical limit","task":"Go further than usual — distance, weight, cold, endurance. Safely.","why":"The body teaches the mind what 'I can't' is really worth.","reflect":"What did you find past your usual stopping point?","quote":{"q":"Believe you can and you're halfway there.","by":"Theodore Roosevelt"},"treat":{"type":"teaser","q":"What begins with T, ends with T, and has T in it?","a":"A teapot."}},{"day":89,"kind":"C","kindLabel":"Connection","phase":4,"title":"Celebrate someone fully","task":"Make a genuine fuss over someone's win, like it's your own.","why":"Shared joy multiplies; envy only divides.","reflect":"Whose joy did you amplify?","quote":{"q":"Everything you've ever wanted is on the other side of fear.","by":"George Addair"},"treat":{"type":"fact","q":"There's enough DNA in your body to stretch to the Sun and back hundreds of times.","a":"Coiled incredibly tightly in each cell."}},{"day":90,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Audit your inputs","task":"Look at what you consume daily — feeds, news, media. Cut one draining source.","why":"You become what you repeatedly take in. Choose it.","reflect":"What did you cut, and why?","quote":{"q":"The future belongs to those who believe in the beauty of their dreams.","by":"Eleanor Roosevelt"},"treat":{"type":"puzzle","q":"A man builds a house with all four sides facing south. A bear walks by. What colour is it?","a":"White — the house is at the North Pole."}},{"day":91,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Make a bold ask","task":"Ask for something you want but assume you can't have — a chance, a meeting, a discount.","why":"Most closed doors were never actually locked.","reflect":"What did you ask for?","quote":{"q":"Do one thing every day that scares you.","by":"Eleanor Roosevelt"},"treat":{"type":"teaser","q":"What can you break, even if you never touch it?","a":"A promise."}},{"day":92,"kind":"C","kindLabel":"Connection","phase":4,"title":"Write someone a real letter","task":"Handwrite a letter to someone who shaped you. Send it.","why":"A letter says 'you were worth my time' like nothing digital.","reflect":"Who, and what did you tell them?","quote":{"q":"No one can make you feel inferior without your consent.","by":"Eleanor Roosevelt"},"treat":{"type":"fact","q":"Hummingbirds are the only birds that can fly backwards.","a":"Their wings rotate in a figure-eight."}},{"day":93,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Practice contentment","task":"For one day, want nothing more than what you have. Notice the fullness.","why":"Wanting less is a faster route to enough than getting more.","reflect":"What did contentment feel like?","quote":{"q":"Great minds discuss ideas; average minds discuss events; small minds discuss people.","by":"Eleanor Roosevelt"},"treat":{"type":"puzzle","q":"What three positive numbers give the same result when multiplied and added?","a":"1, 2, and 3."}},{"day":94,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Face one avoidance head-on","task":"Take on the thing you've been structurally avoiding in your life.","why":"Avoidance shrinks a life slowly. Confrontation grows it fast.","reflect":"What did you face?","quote":{"q":"You must do the things you think you cannot do.","by":"Eleanor Roosevelt"},"treat":{"type":"teaser","q":"What goes up and down but never moves?","a":"A staircase."}},{"day":95,"kind":"C","kindLabel":"Connection","phase":4,"title":"Build a tiny tradition","task":"Start a small recurring ritual with someone you care about.","why":"Rituals are how relationships put down roots.","reflect":"What tradition did you begin?","quote":{"q":"Happiness is when what you think, what you say, and what you do are in harmony.","by":"Gandhi"},"treat":{"type":"fact","q":"The unicorn beetle can lift 850 times its own weight.","a":"Pound for pound, far stronger than any vehicle."}},{"day":96,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"Define what success means to you","task":"Write your own definition of a life well lived — not anyone else's.","why":"A borrowed definition of success is a recipe for emptiness.","reflect":"How does yours differ from the inherited one?","quote":{"q":"The weak can never forgive. Forgiveness is the attribute of the strong.","by":"Gandhi"},"treat":{"type":"puzzle","q":"I am light as a feather, yet the strongest person can't hold me for five minutes. What am I?","a":"Your breath."}},{"day":97,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Create something ambitious","task":"Start a project bigger than a single day. Today, just begin it.","why":"Big creations give days a spine to grow around.","reflect":"What did you start?","quote":{"q":"Live as if you were to die tomorrow. Learn as if you were to live forever.","by":"Gandhi"},"treat":{"type":"teaser","q":"What has four wheels and flies?","a":"A garbage truck."}},{"day":98,"kind":"C","kindLabel":"Connection","phase":4,"title":"Be vulnerable first","task":"Share something real and unguarded before the other person does.","why":"Going first gives others permission to be human too.","reflect":"What did you risk, and what came back?","quote":{"q":"Strength does not come from physical capacity. It comes from an indomitable will.","by":"Gandhi"},"treat":{"type":"fact","q":"Saturn would float if you could find a bathtub big enough.","a":"It's less dense than water."}},{"day":99,"kind":"K","kindLabel":"Inner calm","phase":4,"title":"100-day reflection","task":"Re-read your journey. You're two-thirds in. Notice who you're becoming.","why":"Becoming is slow up close and undeniable across 100 days.","reflect":"Who are you becoming?","quote":{"q":"In a gentle way, you can shake the world.","by":"Gandhi"},"treat":{"type":"puzzle","q":"How many months have 28 days?","a":"All 12."}},{"day":100,"kind":"A","kindLabel":"Aliveness","phase":4,"title":"Reclaim a fear from day 1","task":"Redo an early challenge that scared you — bigger, bolder.","why":"Measuring the edge against your old edge is proof of growth.","reflect":"How far has the fear moved?","quote":{"q":"Don't judge each day by the harvest you reap but by the seeds that you plant.","by":"Robert Louis Stevenson"},"treat":{"type":"teaser","q":"What word becomes its opposite when you add a letter?","a":"'Apart' → 'a part'."}},{"day":101,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Spend an hour in silence","task":"One hour, no input at all. Just you and your own mind.","why":"In real silence, the truest things finally get a turn to speak.","reflect":"What surfaced?","quote":{"q":"To know even one life has breathed easier because you have lived, this is to have succeeded.","by":"Emerson"},"treat":{"type":"fact","q":"A blue whale's heart is so big a small child could crawl through its arteries.","a":"It weighs around 180 kg."}},{"day":102,"kind":"C","kindLabel":"Connection","phase":5,"title":"Help a stranger meaningfully","task":"Go out of your way to genuinely help someone you don't know.","why":"Anonymous good is the purest proof you're a force for warmth.","reflect":"What did you do?","quote":{"q":"Finish each day and be done with it. You have done what you could.","by":"Emerson"},"treat":{"type":"puzzle","q":"What can you serve but never eat?","a":"A tennis ball / a purpose."}},{"day":103,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Follow a wild curiosity","task":"Chase something you're curious about with no practical reason for an hour.","why":"Curiosity followed for its own sake is aliveness itself.","reflect":"Where did it lead?","quote":{"q":"Always do what you are afraid to do.","by":"Emerson"},"treat":{"type":"teaser","q":"Remove my outside, cook my inside, then eat my outside and throw away my inside. What am I?","a":"Corn on the cob (husk, kernels)."}},{"day":104,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Write your own eulogy","task":"Write how you'd want to be remembered. Let it guide today.","why":"The end clarifies what the middle is for.","reflect":"What did you want said about you?","quote":{"q":"The only person you are destined to become is the person you decide to be.","by":"Emerson"},"treat":{"type":"fact","q":"Ravens can mimic human speech better than some parrots.","a":"They're remarkably intelligent."}},{"day":105,"kind":"C","kindLabel":"Connection","phase":5,"title":"Reconcile fully with someone","task":"Take a real step toward healing a relationship that's been broken.","why":"Some peace is only available on the far side of courage.","reflect":"What did reaching toward them cost and give?","quote":{"q":"What we think, we become.","by":"The Buddha"},"treat":{"type":"puzzle","q":"A boy and a doctor go fishing. The boy is the doctor's son, but the doctor is not the boy's father. Who is the doctor?","a":"His mother."}},{"day":106,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Be brave for someone else's sake","task":"Take a brave action on behalf of someone or something you care about.","why":"Courage in service of others is the deepest kind.","reflect":"What did you do, and for whom?","quote":{"q":"Three things cannot be long hidden: the sun, the moon, and the truth.","by":"The Buddha"},"treat":{"type":"teaser","q":"What flies without wings?","a":"Time."}},{"day":107,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Practice radical acceptance","task":"Pick one thing you can't change. Today, fully stop fighting it.","why":"Peace begins where the war with reality ends.","reflect":"What did you accept, and what eased?","quote":{"q":"Holding on to anger is like grasping a hot coal with the intent of throwing it at someone else.","by":"The Buddha"},"treat":{"type":"fact","q":"Trees can communicate and share nutrients through underground fungal networks.","a":"Nicknamed the 'Wood Wide Web'."}},{"day":108,"kind":"C","kindLabel":"Connection","phase":5,"title":"Invest deeply in one person","task":"Spend real, undistracted time pouring into one relationship today.","why":"A few deep wells beat a hundred shallow puddles.","reflect":"Who, and what did you give?","quote":{"q":"If you light a lamp for somebody, it will also brighten your own path.","by":"The Buddha"},"treat":{"type":"puzzle","q":"Which weighs more: a pound of feathers or a pound of bricks?","a":"Neither — both weigh a pound."}},{"day":109,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Take a leap on a goal","task":"Make a concrete, hard-to-reverse move toward a real goal.","why":"Commitment, not motivation, is what builds a life.","reflect":"What did you commit to?","quote":{"q":"Peace comes from within. Do not seek it without.","by":"The Buddha"},"treat":{"type":"teaser","q":"What has roots that nobody sees, is taller than trees, yet never grows?","a":"A mountain."}},{"day":110,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Notice beauty all day","task":"Today, actively hunt for small beauty everywhere. Collect it.","why":"A life that notices beauty is rarely an empty one.","reflect":"What beauty did you almost miss?","quote":{"q":"You yourself, as much as anybody in the entire universe, deserve your love and affection.","by":"The Buddha"},"treat":{"type":"fact","q":"Your brain uses about 20% of your body's energy despite being 2% of its weight.","a":"Thinking is metabolically expensive."}},{"day":111,"kind":"C","kindLabel":"Connection","phase":5,"title":"Express love plainly","task":"Tell the people you love that you love them. Directly. Today.","why":"Love unspoken helps no one. Say it while you can.","reflect":"Who did you tell, and how did it feel?","quote":{"q":"The quieter you become, the more you can hear.","by":"Ram Dass"},"treat":{"type":"puzzle","q":"If a plane crashes on the border of two countries, where do you bury the survivors?","a":"You don't bury survivors."}},{"day":112,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Build something that outlasts the day","task":"Start something — a habit, a work, a thing — meant to endure.","why":"Meaning often lives in what continues after the moment.","reflect":"What did you begin to build?","quote":{"q":"We're all just walking each other home.","by":"Ram Dass"},"treat":{"type":"teaser","q":"What is so fragile that saying its name breaks it?","a":"Silence."}},{"day":113,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Sit with mortality, gently","task":"Reflect honestly that your time is finite. Let it sharpen today.","why":"Death is the editor that makes life's sentences matter.","reflect":"What did finiteness make you want to do?","quote":{"q":"The heart surrenders everything to the moment. The mind judges and holds back.","by":"Ram Dass"},"treat":{"type":"fact","q":"Some species of jellyfish are effectively biologically immortal.","a":"Turritopsis can revert to a younger state."}},{"day":114,"kind":"C","kindLabel":"Connection","phase":5,"title":"Forgive a deep wound","task":"Take a real step toward forgiving something that hurt you badly.","why":"Forgiveness is the freedom you give yourself, not them.","reflect":"What did you begin to release?","quote":{"q":"If you think you are enlightened, go spend a week with your family.","by":"Ram Dass"},"treat":{"type":"puzzle","q":"I am an English word with three consecutive double letters. What am I?","a":"Bookkeeper."}},{"day":115,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Do your most alive thing","task":"Identify what makes you feel most alive — and do it fully today.","why":"You already know your aliveness. Today, obey it.","reflect":"What is it, and why did you forget?","quote":{"q":"Suffering is the sandpaper of our incarnation.","by":"Ram Dass"},"treat":{"type":"teaser","q":"What has cities, but no people; forests, but no trees?","a":"A map."}},{"day":116,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Simplify something complex","task":"Take one tangled area of life and make it simpler today.","why":"Complexity is often fear wearing a costume. Cut it.","reflect":"What did you simplify?","quote":{"q":"The thing about meditation is: you become more and more you.","by":"David Lynch"},"treat":{"type":"fact","q":"Astronauts grow up to 5 cm taller in space.","a":"No gravity compressing the spine."}},{"day":117,"kind":"C","kindLabel":"Connection","phase":5,"title":"Repair, deepen, or release","task":"Pick one relationship and consciously repair, deepen, or release it.","why":"Tending your bonds is tending your own foundations.","reflect":"Which did you choose, and why?","quote":{"q":"Whatever you are, be a good one.","by":"Abraham Lincoln"},"treat":{"type":"puzzle","q":"What occurs twice in a week, once in a year, but never in a day?","a":"The letter 'E'."}},{"day":118,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Chase a 'someday' today","task":"Take the someday thing and do a real piece of it now.","why":"Someday is where dreams go to quietly die. Move it to today.","reflect":"What 'someday' did you start?","quote":{"q":"Most folks are about as happy as they make up their minds to be.","by":"Abraham Lincoln"},"treat":{"type":"teaser","q":"What kind of coat is best put on wet?","a":"A coat of paint."}},{"day":119,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Practice presence all day","task":"For one whole day, keep returning to right now whenever you drift.","why":"The present is the only place life is ever actually lived.","reflect":"How often did you drift — and return?","quote":{"q":"Discipline is choosing between what you want now and what you want most.","by":"Abraham Lincoln"},"treat":{"type":"fact","q":"A cloud can weigh more than a million pounds.","a":"Water droplets add up across its vast volume."}},{"day":120,"kind":"C","kindLabel":"Connection","phase":5,"title":"Create connection for others","task":"Introduce two people, host something, bring people together.","why":"Being a weaver of others' bonds is its own deep purpose.","reflect":"Who did you connect?","quote":{"q":"Things do not happen. Things are made to happen.","by":"John F. Kennedy"},"treat":{"type":"puzzle","q":"If five cats catch five mice in five minutes, how long for one cat to catch one mouse?","a":"Five minutes."}},{"day":121,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Take an artistic risk","task":"Make something creatively bolder than you'd normally dare.","why":"Art is courage made visible. Dare more.","reflect":"What risk did you take?","quote":{"q":"Efforts and courage are not enough without purpose and direction.","by":"John F. Kennedy"},"treat":{"type":"teaser","q":"What has a bottom at the top?","a":"Your legs."}},{"day":122,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"Reclaim your attention","task":"Spend a day refusing to let your attention be stolen. Guard it.","why":"Your attention is your life. Where it goes, you go.","reflect":"What tried to steal it — and did you let it?","quote":{"q":"The best and most beautiful things in the world cannot be seen or touched, but felt with the heart.","by":"Helen Keller"},"treat":{"type":"fact","q":"The inventor of the frisbee was turned into a frisbee after he died.","a":"His ashes were moulded into memorial discs."}},{"day":123,"kind":"C","kindLabel":"Connection","phase":5,"title":"Have a legacy conversation","task":"Talk with someone older about what's mattered most in their life.","why":"Borrowed wisdom is the cheapest way to grow.","reflect":"What did they teach you?","quote":{"q":"Life is either a daring adventure or nothing at all.","by":"Helen Keller"},"treat":{"type":"puzzle","q":"I'm where yesterday follows today and tomorrow's in the middle. What am I?","a":"A dictionary."}},{"day":124,"kind":"A","kindLabel":"Aliveness","phase":5,"title":"Bet on yourself","task":"Make one decision today that bets on your own potential.","why":"Self-belief is built by acting before you feel ready.","reflect":"What did you bet on?","quote":{"q":"Optimism is the faith that leads to achievement.","by":"Helen Keller"},"treat":{"type":"teaser","q":"What can you hold without ever touching it?","a":"A conversation / a grudge."}},{"day":125,"kind":"K","kindLabel":"Inner calm","phase":5,"title":"125-day reflection","task":"Re-read it all. You're nearly there. Honor how far you've come.","why":"The last stretch is sweeter when you see the whole climb.","reflect":"What are you proudest of?","quote":{"q":"Alone we can do so little; together we can do so much.","by":"Helen Keller"},"treat":{"type":"fact","q":"Bees can recognise human faces.","a":"They map features much like we do."}},{"day":126,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Write the life you want","task":"Describe, in detail, the life you actually want to live.","why":"You can't move toward a future you've never let yourself picture.","reflect":"What did you let yourself want?","quote":{"q":"The best preparation for tomorrow is doing your best today.","by":"H. Jackson Brown Jr."},"treat":{"type":"puzzle","q":"Add me to myself and multiply by 4. Divide by 8 and you'll have me again. What number?","a":"Any number — the operations cancel out."}},{"day":127,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Take the boldest action yet","task":"Do the single boldest thing of these 150 days.","why":"You're not who you were on day 1. Prove it to yourself.","reflect":"What did you do?","quote":{"q":"Courage doesn't always roar. Sometimes it's the quiet voice at day's end saying I will try again tomorrow.","by":"Mary Anne Radmacher"},"treat":{"type":"teaser","q":"What building has the most stories?","a":"A library."}},{"day":128,"kind":"C","kindLabel":"Connection","phase":6,"title":"Repair your most important bond","task":"Pour real effort into the relationship that matters most.","why":"The most important bond deserves your best courage.","reflect":"What did you give it?","quote":{"q":"Nothing in the world is worth having or worth doing unless it means effort, pain, difficulty.","by":"Theodore Roosevelt"},"treat":{"type":"fact","q":"The longest place name on the planet has 85 letters.","a":"A hill in New Zealand."}},{"day":129,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Let go of one old story","task":"Identify a story about yourself that's holding you back. Release it.","why":"We outgrow our old stories long before we drop them.","reflect":"What story did you set down?","quote":{"q":"Comparison is the thief of joy.","by":"Theodore Roosevelt"},"treat":{"type":"puzzle","q":"A is the father of B, but B is not the son of A. How?","a":"B is A's daughter."}},{"day":130,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Do the thing you said you never could","task":"Take on something you've long told yourself is 'not me.'","why":"'Not me' is often just 'not yet tried.'","reflect":"What did you discover you could do?","quote":{"q":"Nobody can go back and start a new beginning, but anyone can start today and make a new ending.","by":"Maria Robinson"},"treat":{"type":"teaser","q":"What's orange and sounds like a parrot?","a":"A carrot."}},{"day":131,"kind":"C","kindLabel":"Connection","phase":6,"title":"Give someone your full presence","task":"Spend a whole interaction utterly present, generous, undistracted.","why":"Presence is the gift only you can give, and only now.","reflect":"What did your full presence change?","quote":{"q":"The greatest weapon against stress is our ability to choose one thought over another.","by":"William James"},"treat":{"type":"fact","q":"More than half of your body is not 'you' — it's microbial cells.","a":"Bacteria outnumber your own cells."}},{"day":132,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Make peace with your past","task":"Take a real step toward accepting a part of your history.","why":"The past loosens its grip the moment you stop resisting it.","reflect":"What did you make peace with?","quote":{"q":"The deepest principle in human nature is the craving to be appreciated.","by":"William James"},"treat":{"type":"puzzle","q":"What can be cracked, made, told, and played?","a":"A joke."}},{"day":133,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Live a day fully as your best self","task":"For one day, act as the person you most want to become.","why":"You become what you practice. Practice the best version.","reflect":"What did being that person feel like?","quote":{"q":"We are not given a good life or a bad life. We are given a life. It's up to us to make it good or bad.","by":"Unknown"},"treat":{"type":"teaser","q":"What gets broken without being held?","a":"A promise."}},{"day":134,"kind":"C","kindLabel":"Connection","phase":6,"title":"Tell someone they changed your life","task":"Tell a person who shaped you exactly how — in full.","why":"Some debts are only repaid by being named out loud.","reflect":"Who, and what did you say?","quote":{"q":"Almost everything will work again if you unplug it for a few minutes, including you.","by":"Anne Lamott"},"treat":{"type":"fact","q":"The first computer programmer was a woman, Ada Lovelace, in the 1840s.","a":"She wrote an algorithm for a machine never built."}},{"day":135,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Define your purpose, clearly","task":"Write your purpose as clearly as you can now. Not perfect — true.","why":"A named purpose is a compass you can't lose.","reflect":"What did you write?","quote":{"q":"You can't think your way into right action, but you can act your way into right thinking.","by":"Anne Lamott"},"treat":{"type":"puzzle","q":"I have keys but no locks, space but no room, you can enter but not go in. What am I?","a":"A keyboard."}},{"day":136,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Start the legacy project","task":"Begin the thing you want to be building for years, not days.","why":"The best time to start the long thing is always now.","reflect":"What did you begin?","quote":{"q":"Lighthouses don't go running all over an island looking for boats to save; they just stand there shining.","by":"Anne Lamott"},"treat":{"type":"teaser","q":"What has one head, one foot, and four legs?","a":"A bed."}},{"day":137,"kind":"C","kindLabel":"Connection","phase":6,"title":"Heal a family relationship","task":"Take one brave step toward a family bond that needs healing.","why":"Family wounds run deep — and so does the relief of mending them.","reflect":"What step did you take?","quote":{"q":"Hope begins in the dark.","by":"Anne Lamott"},"treat":{"type":"fact","q":"Wombats, octopuses, and crows all use tools or show problem-solving once thought human-only.","a":"Intelligence is everywhere in nature."}},{"day":138,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Practice being enough","task":"For a day, act as if you are already enough. Because you are.","why":"The emptiness lies. You were never the lack it claimed.","reflect":"What changed when you assumed enough?","quote":{"q":"Be kind, for everyone you meet is fighting a hard battle.","by":"Ian Maclaren"},"treat":{"type":"puzzle","q":"What english word retains the same pronunciation even after removing four of its five letters?","a":"Queue."}},{"day":139,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Take a real risk on a dream","task":"Make a concrete, costly move toward your biggest dream.","why":"Dreams become real at the exact point they cost something.","reflect":"What did you risk?","quote":{"q":"The only way to do great work is to love what you do.","by":"Steve Jobs"},"treat":{"type":"teaser","q":"What can you see once in a minute, twice in a moment, and never in a thousand years?","a":"The letter M."}},{"day":140,"kind":"C","kindLabel":"Connection","phase":6,"title":"Build community on purpose","task":"Take a deliberate step to build or deepen a community around you.","why":"No one becomes whole alone. Belonging is built.","reflect":"What did you build?","quote":{"q":"Your time is limited, so don't waste it living someone else's life.","by":"Steve Jobs"},"treat":{"type":"fact","q":"Lightning strikes the Earth about 8 million times a day.","a":"Roughly 100 times every second."}},{"day":141,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Forgive yourself completely","task":"Offer yourself full forgiveness for the past. Mean it this time.","why":"You cannot become while still at war with who you were.","reflect":"What did full forgiveness feel like?","quote":{"q":"Stay hungry, stay foolish.","by":"Steve Jobs"},"treat":{"type":"puzzle","q":"A bat and a ball cost ₹110 total. The bat costs ₹100 more than the ball. How much is the ball?","a":"₹5 (not ₹10)."}},{"day":142,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Do what you'd do if you couldn't fail","task":"Pick the fearless version of your day, and live it.","why":"Most limits are imagined. Test one by ignoring it.","reflect":"What did you do, fearless?","quote":{"q":"The people who are crazy enough to think they can change the world are the ones who do.","by":"Apple / Rob Siltanen"},"treat":{"type":"teaser","q":"What can you put in a bucket to make it weigh less?","a":"A hole."}},{"day":143,"kind":"C","kindLabel":"Connection","phase":6,"title":"Be the friend you wish you had","task":"Be, for someone, exactly the friend you've longed for.","why":"We often most need to give what we most want to receive.","reflect":"Who did you show up for, and how?","quote":{"q":"Whether you think you can, or you think you can't, you're right.","by":"Henry Ford"},"treat":{"type":"fact","q":"Reading just six minutes a day can reduce stress by over 60%.","a":"More than music or a walk, in one study."}},{"day":144,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Write your manifesto","task":"Write the principles you want to live the rest of your life by.","why":"A life on purpose starts with words you choose to keep.","reflect":"What's in your manifesto?","quote":{"q":"Quality means doing it right when no one is looking.","by":"Henry Ford"},"treat":{"type":"puzzle","q":"Forward I'm a country, backward I'm a fowl. What am I?","a":"Peru → 'urep'... actually 'Nepal' reversed isn't quite — try 'Peru'/'Iran'. Best: 'time' backward is 'emit'."}},{"day":145,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Reclaim your aliveness fully","task":"Do the thing that makes you feel most alive — and vow to keep it.","why":"Aliveness isn't a phase. It's a practice you protect.","reflect":"How will you keep it?","quote":{"q":"Obstacles are those frightful things you see when you take your eyes off your goal.","by":"Henry Ford"},"treat":{"type":"teaser","q":"What is always in front of you but can't be seen?","a":"The future."}},{"day":146,"kind":"C","kindLabel":"Connection","phase":6,"title":"Give back what you've gained","task":"Pass on something you've learned in 150 days to someone else.","why":"Wisdom kept rots; wisdom shared compounds.","reflect":"What did you pass on?","quote":{"q":"I have not failed. I've just found 10,000 ways that won't work.","by":"Thomas Edison"},"treat":{"type":"fact","q":"The act of helping someone releases oxytocin — a 'helper's high' is real.","a":"Kindness literally rewards your brain."}},{"day":147,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Look at who you've become","task":"Re-read day 1 to now. Meet the person you were. See the distance.","why":"You are the proof that change was always possible.","reflect":"What would day-1 you say to you now?","quote":{"q":"Genius is one percent inspiration and ninety-nine percent perspiration.","by":"Thomas Edison"},"treat":{"type":"puzzle","q":"What is the next number: 1, 11, 21, 1211, 111221, ...?","a":"312211 - each line describes the previous one ('one 1', 'two 1s'...)."}},{"day":148,"kind":"A","kindLabel":"Aliveness","phase":6,"title":"Do the thing you've been building toward","task":"Take the culminating action of this whole journey.","why":"Every day pointed here. Arrive on purpose.","reflect":"What did you do?","quote":{"q":"Our greatest weakness lies in giving up. The certain way to succeed is always to try just one more time.","by":"Thomas Edison"},"treat":{"type":"teaser","q":"What word contains all of the twenty-six letters?","a":"Alphabet."}},{"day":149,"kind":"C","kindLabel":"Connection","phase":6,"title":"Express gratitude for the journey","task":"Thank the people — and yourself — who carried you through 150 days.","why":"Gratitude is how a chapter closes well.","reflect":"Who did you thank?","quote":{"q":"Go confidently in the direction of your dreams. Live the life you have imagined.","by":"Henry David Thoreau"},"treat":{"type":"fact","q":"You're never more than a few metres from a spider — and that's mostly fine.","a":"Most are harmless and eat pests."}},{"day":150,"kind":"K","kindLabel":"Inner calm","phase":6,"title":"Design day 151 and beyond","task":"Write your own challenge for tomorrow — and the direction for after.","why":"The app was never the point. You authoring your life was.","reflect":"What did you choose for yourself, and why?","quote":{"q":"Not until we are lost do we begin to understand ourselves.","by":"Henry David Thoreau"},"treat":{"type":"puzzle","q":"The day before two days after the day before tomorrow is Saturday. What day is today?","a":"Friday."}}];
+</script>
 
-function load(){ try{const s=JSON.parse(localStorage.getItem(KEY))||fresh(); if(!s.notes)s.notes={}; return s}catch(e){return fresh()} }
-function fresh(){ return {start:new Date().toISOString(), checks:{}, notes:{}, currentDay:1} }
-function save(){ state.currentDay=view; localStorage.setItem(KEY,JSON.stringify(state)) }
+<script>
+/* ============ STATE + PERSISTENCE ============ */
+const KEY='kindle_experiments_v1';
+let state={ sparks:0, streak:0, completed:{}, reflections:{}, lastDate:null };
+let cur=null, activePhase=1;
+const STRAND={C:{c:'var(--conn)',cls:'conn'},A:{c:'var(--alive)',cls:''},K:{c:'var(--calm)',cls:'calm'}};
+const PHASE_NAMES={1:"Arrive",2:"Open",3:"Deepen",4:"Expand",5:"Integrate",6:"Become"};
+const PHASE_DESC={
+ 1:"Build the daily rhythm. Gentle starts.",2:"Deepen and grow a little bolder.",
+ 3:"Vulnerability, honesty, meaning.",4:"Courage, identity, contribution.",
+ 5:"Purpose, service, depth.",6:"Author your own life."};
+const FEELINGS=[["😟","Hard"],["😐","Meh"],["🙂","Good"],["✨","Alive"],["🕊️","Calm"]];
 
-function dayChecks(day){ const c=(state.checks[day]||[]).slice(); while(c.length<HABITS.length)c.push(false); return c.slice(0,HABITS.length) }
-function isDayDone(day){ return dayChecks(day).every(Boolean) }
+function loadState(){ try{const v=localStorage.getItem(KEY);if(v)state=JSON.parse(v);}catch(e){} }
+function saveState(){ try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn(e);} }
 
-function computeStreak(){
-  let s=0;
-  for(let d=150; d>=1; d--){ if(isDayDone(d)){ /*find top*/ } }
-  // streak = consecutive completed days ending at the latest completed day
-  let last=0;
-  for(let d=1; d<=150; d++) if(isDayDone(d)) last=d;
-  if(!last) return 0;
-  for(let d=last; d>=1; d--){ if(isDayDone(d)) s++; else break; }
-  return s;
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function yestStr(){const d=new Date();d.setDate(d.getDate()-1);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function maxDone(){let m=0;for(const k in state.completed)if(state.completed[k])m=Math.max(m,+k);return m;}
+function nextDay(){return Math.min(maxDone()+1,150);}
+function unlocked(n){return n<=maxDone()+1;}
+
+/* ============ HOME ============ */
+function renderToday(){
+  const nd=nextDay(), d=DAYS[nd-1], done=maxDone();
+  const c=document.getElementById('todayCard');
+  if(done>=150){
+    c.innerHTML=`<div class="eyebrow"><span class="strand-dot" style="background:var(--gold)"></span>Journey complete</div>
+      <h2>You did all 150 days ✦</h2>
+      <p class="task">You can revisit any day, re-read your journal, or design what comes next.</p>
+      <button class="cta" onclick="openExp(150)">Revisit day 150 →</button>`;
+    return;
+  }
+  const s=STRAND[d.kind];
+  c.innerHTML=`
+    <div class="eyebrow"><span class="strand-dot" style="background:${s.c}"></span>Day ${nd} · ${d.kindLabel} · ${PHASE_NAMES[d.phase]}</div>
+    <h2>${d.title}</h2>
+    <p class="task">${d.task}</p>
+    <button class="cta ${s.cls}" onclick="openExp(${nd})">${done===0?'Begin day 1':'Open today'} →</button>
+    <div class="progressline"><div class="ptrack"><i style="width:${done/150*100}%"></i></div><span>${done}/150</span></div>`;
 }
-
-function render(){
-  const rec = DATA[view-1];
-  document.getElementById("quoteText").textContent = rec.quote;
-  document.getElementById("factText").textContent = rec.fact;
-  document.getElementById("totalLbl").textContent = view + " / 150";
-
-  const checks = dayChecks(view);
-  const wrap = document.getElementById("habits");
-  wrap.innerHTML="";
-  HABITS.forEach((hb,i)=>{
-    const el=document.createElement("div");
-    el.className="habit"+(checks[i]?" done":"");
-    el.innerHTML=`<div class="check">✓</div><span class="emoji">${hb.e}</span>
-      <div class="txt"><div class="h">${hb.h}</div><div class="d">${hb.d}</div></div>`;
-    el.onclick=()=>{ const c=dayChecks(view).slice(); c[i]=!c[i]; state.checks[view]=c; save(); render(); };
-    wrap.appendChild(el);
+function renderPhases(){
+  const box=document.getElementById('phases');box.innerHTML='';
+  for(let p=1;p<=6;p++){
+    const c=document.createElement('div');c.className='pchip'+(p===activePhase?' active':'');
+    c.textContent=p+'· '+PHASE_NAMES[p];
+    c.onclick=()=>{activePhase=p;renderPhases();renderPath();};
+    box.appendChild(c);
+  }
+}
+function renderPath(){
+  const area=document.getElementById('pathArea');area.innerHTML='';
+  const start=(activePhase-1)*25, slice=DAYS.slice(start,start+25);
+  const h=document.createElement('div');h.className='phasehead';
+  h.innerHTML=`Phase ${activePhase} · ${PHASE_NAMES[activePhase]}<small>${PHASE_DESC[activePhase]}</small>`;
+  area.appendChild(h);
+  const g=document.createElement('div');g.className='grid';const nd=nextDay();
+  slice.forEach(d=>{
+    const done=!!state.completed[d.day],open=unlocked(d.day),today=(d.day===nd&&!done);
+    const el=document.createElement('div');
+    el.className='cell'+(done?' done':'')+(today?' today':'')+(open?'':' locked');
+    el.innerHTML=`<div class="cn">${d.day}</div><div class="cd" style="background:${STRAND[d.kind].c}"></div>${done?'<div class="seal">✦</div>':''}`;
+    if(open)el.onclick=()=>openExp(d.day);
+    g.appendChild(el);
   });
-
-  document.getElementById("dayDone").className="day-done"+(isDayDone(view)?" show":"");
-
-  let doneDays=0; for(let d=1;d<=150;d++) if(isDayDone(d)) doneDays++;
-  const pct=Math.round(doneDays/150*100);
-  document.getElementById("barFill").style.width=pct+"%";
-  document.getElementById("pct").textContent=pct+"%";
-  document.getElementById("doneCount").textContent=doneDays+(doneDays===1?" day complete":" days complete");
-  document.getElementById("streakNum").textContent=computeStreak();
-
-  document.getElementById("noteBox").value = state.notes[view] || "";
-  document.getElementById("noteSaved").className = "";
+  area.appendChild(g);
 }
 
-document.getElementById("prev").onclick=()=>{ if(view>1){view--;save();render()} };
-document.getElementById("next").onclick=()=>{ if(view<150){view++;save();render()} };
-document.getElementById("todayBtn").onclick=()=>{
-  const start=new Date(state.start); const now=new Date();
-  const diff=Math.floor((now-start)/(1000*60*60*24))+1;
-  view=Math.min(150,Math.max(1,diff)); save(); render();
+/* ============ EXPERIMENT ============ */
+function openExp(n){
+  const d=DAYS[n-1];cur={day:n,d:d,feeling:null};
+  show('exp');
+  const s=STRAND[d.kind];
+  document.getElementById('expDayLabel').textContent=`Day ${n} of 150`;
+  document.getElementById('expStrand').textContent=d.kindLabel;
+  document.getElementById('expStrandDot').style.background=s.c;
+  document.getElementById('expTitle').textContent=d.title;
+  document.getElementById('expTask').textContent=d.task;
+  document.getElementById('expWhy').textContent=d.why;
+  document.getElementById('expQuote').textContent='“'+d.quote.q+'”';
+  document.getElementById('expQuoteBy').textContent='— '+d.quote.by;
+  // treat
+  const tEmoji={puzzle:'🧩',teaser:'🤔',fact:'💡'}[d.treat.type]||'🧠';
+  const tName={puzzle:'Puzzle',teaser:'Brain teaser',fact:'Fun fact'}[d.treat.type]||'Brain treat';
+  document.getElementById('treatLabel').textContent=tEmoji+' '+tName;
+  document.getElementById('treatQ').textContent=d.treat.q;
+  const rev=document.getElementById('treatReveal'),ans=document.getElementById('treatA');
+  ans.textContent=d.treat.a;ans.classList.remove('show');
+  if(d.treat.type==='fact'){rev.textContent='Tell me more';}else{rev.textContent='Reveal answer';}
+  rev.style.display='inline-block';
+  rev.onclick=()=>{ans.classList.add('show');rev.style.display='none';};
+  // reflection
+  document.getElementById('reflectQ').textContent=d.reflect;
+  document.getElementById('reflectText').value=(state.reflections[n]&&state.reflections[n].text)||'';
+  // feeling row
+  const fr=document.getElementById('feelingRow');fr.innerHTML='';
+  const saved=state.reflections[n]&&state.reflections[n].feeling;
+  FEELINGS.forEach((f,i)=>{
+    const b=document.createElement('button');b.className='fbtn'+(saved===i?' sel':'');
+    b.innerHTML=`<span class="fe">${f[0]}</span>${f[1]}`;
+    b.onclick=()=>{cur.feeling=i;[...fr.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
+    fr.appendChild(b);
+  });
+  cur.feeling=(saved!=null?saved:null);
+  const done=!!state.completed[n];
+  document.getElementById('completeBtn').textContent=done?'Save changes →':'Mark today complete →';
+  window.scrollTo(0,0);
+}
+document.getElementById('completeBtn').onclick=()=>{
+  const n=cur.day;
+  const text=document.getElementById('reflectText').value.trim();
+  state.reflections[n]={text,feeling:cur.feeling,date:todayStr()};
+  const firstTime=!state.completed[n];
+  let gained=0;
+  if(firstTime){
+    gained=15+(text?10:0)+(cur.feeling!=null?5:0);
+    state.sparks+=gained;
+    state.completed[n]=true;
+    const t=todayStr();
+    if(state.lastDate!==t){
+      if(state.lastDate===yestStr())state.streak++;else state.streak=1;
+      state.lastDate=t;
+    }
+  }
+  saveState();updateStats();
+  if(firstTime) showDone(gained); else { goHome(); }
 };
-document.getElementById("foodToggle").onclick=function(){
-  this.classList.toggle("open");
-  document.getElementById("foodPanel").classList.toggle("open");
+function showDone(gained){
+  show('done');
+  const d=cur.d;
+  document.getElementById('doneSub').textContent=`“${d.title}” · ${d.kindLabel}`;
+  document.getElementById('dSpark').textContent='+'+gained;
+  document.getElementById('dStreak').textContent=state.streak;
+  document.getElementById('dDone').textContent=maxDone();
+  document.getElementById('doneBackupMsg').textContent='';
+  const nd=nextDay();
+  document.getElementById('doneTip').textContent= maxDone()>=150
+    ? "That's all 150. However you arrived here — you showed up, again and again."
+    : `Come back tomorrow for day ${nd} to keep your streak alive.`;
+}
+
+/* ============ JOURNAL ============ */
+function openJournal(){
+  show('journal');setNav('journal');
+  const list=document.getElementById('journalList');list.innerHTML='';
+  const entries=Object.keys(state.reflections).map(Number).sort((a,b)=>b-a);
+  if(!entries.length){list.innerHTML='<p class="jempty">Your reflections will appear here once you complete your first day.</p>';return;}
+  entries.forEach(n=>{
+    const r=state.reflections[n],d=DAYS[n-1];
+    const el=document.createElement('div');el.className='jentry';
+    const fe=(r.feeling!=null)?FEELINGS[r.feeling][0]:'';
+    el.innerHTML=`<div class="jhead"><span class="jday">Day ${n}</span><span class="jfeel">${fe}</span></div>
+      <div class="jtitle">${d.title} · ${d.kindLabel}</div>
+      <div class="jtext">${r.text? escapeHtml(r.text):'<span class="jempty">No note written.</span>'}</div>`;
+    el.onclick=()=>openExp(n);
+    list.appendChild(el);
+  });
+}
+
+/* ============ BACKUP / RESTORE ============ */
+function doBackup(){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(state)],{type:'application/json'}));
+  a.download='kindle-progress.json';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);
+}
+document.getElementById('backupBtn').onclick=doBackup;
+document.getElementById('doneBackup').onclick=()=>{doBackup();
+  document.getElementById('doneBackupMsg').textContent='✓ Saved to Downloads as kindle-progress.json';};
+function pickRestore(){document.getElementById('restoreFile').click();}
+document.getElementById('restoreBtn').onclick=pickRestore;
+document.getElementById('bannerRestore').onclick=pickRestore;
+document.getElementById('restoreFile').onchange=(e)=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const s=JSON.parse(r.result);
+    if(typeof s.sparks==='number'&&s.completed){state=s;saveState();updateStats();goHome();
+      alert('Restored! You\'re on day '+(maxDone()+1)+' · streak '+state.streak+' 🔥');}
+    else alert('That doesn\'t look like a Kindle backup file.');
+  }catch(err){alert('Could not read that file.');}};
+  r.readAsText(f);e.target.value='';
 };
-document.getElementById("resetBtn").onclick=()=>{
-  if(confirm("Reset all progress and start Day 1 fresh?")){ state=fresh(); view=1; save(); render(); }
+document.getElementById('resetLink').onclick=()=>{
+  if(confirm('Reset ALL progress, streak, sparks and journal? This cannot be undone.')){
+    state={sparks:0,streak:0,completed:{},reflections:{},lastDate:null};
+    saveState();updateStats();goHome();
+  }
 };
 
-let noteTimer;
-const noteBox=document.getElementById("noteBox"), noteSaved=document.getElementById("noteSaved");
-noteBox.addEventListener("input",()=>{
-  state.notes[view]=noteBox.value; save();
-  clearTimeout(noteTimer);
-  noteSaved.textContent="Saved ✓"; noteSaved.className="show";
-  noteTimer=setTimeout(()=>{ noteSaved.className=""; },1500);
-});
+/* ============ NAV / UTIL ============ */
+function show(id){['home','exp','done','journal'].forEach(x=>document.getElementById(x).style.display='none');
+  document.getElementById(id).style.display='block';window.scrollTo(0,0);}
+function setNav(n){document.getElementById('nav-home').classList.toggle('active',n==='home');
+  document.getElementById('nav-journal').classList.toggle('active',n==='journal');}
+function goHome(){activePhase=DAYS[Math.min(nextDay(),150)-1].phase;
+  show('home');setNav('home');renderToday();renderPhases();renderPath();updateBanner();}
+function updateStats(){
+  document.getElementById('xp').textContent=state.sparks;
+  document.getElementById('streak').textContent=state.streak;}
+function updateBanner(){const empty=state.sparks===0&&Object.keys(state.completed).length===0;
+  document.getElementById('banner').style.display=empty?'block':'none';}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 
-render();
+/* ============ BOOT ============ */
+(function(){ loadState();updateStats();goHome(); })();
 </script>
 </body>
 </html>
